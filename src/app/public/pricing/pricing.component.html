@@ -1,0 +1,241 @@
+<!-- top nav starts -->
+<!-- <div class="row"> -->
+	<div class="filds_hdr pricing_hdr">
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<span class="togle_icon" id="menu" (click)="toggleMenu()"><img src="../../../assets/slotsAssets/img/toggle_icon.png"> </span>
+					<a class="signup_logo" href="#"><img src={{somevalue}} (error)="updateUrl($event)"></a>
+				</div>
+				<!-- logo end -->
+				<!-- page title start -->
+				<h3 class="pag_title">Fields Manager - Pricing</h3>
+				<!-- page title end -->
+			</div>
+		</nav>
+	</div>
+	<!-- </div> -->
+	<!-- top nav ends -->
+	<!-- <br> -->
+	<div class="pricing_tp">
+		<div class="container">
+		<div class="pricing_blk">
+
+			<p-tabView>
+			<p-tabPanel header="Subscription">
+			
+					<!-- row start -->
+			<div class="row">
+				<!-- DIRTY Responsive pricing table HTML -->
+				<!-- <article> -->
+				<!-- <ul>
+				<li class="bg-purple">
+				<button>Self-Employed</button>
+				</li>
+				<li class="bg-blue">
+				<button>Simple Start</button>
+				</li>
+				<li class="bg-blue active">
+				<button>Essentials</button>
+				</li>
+				<li class="bg-blue">
+				<button>Plus</button>
+				</li>
+		</ul>   -->
+		<table>
+			<thead>
+				<tr>
+					<th class="hide"></th>
+					<!-- <th class="bg-purple">Basic</th> -->
+					<th class="bg-blue">Basic</th>
+					<th class="bg-blue default">Advanced</th>
+				  <th class="bg-blue">Premium</th>
+				</tr>
+			  </thead>
+			  <tbody>
+					<tr>
+						<td>Monthly price</td>
+						<td><span class="txt-top"></span><button *ngIf="basicDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="basicDetails[0].price != 'contact'" class="txt-l">{{basicDetails[0].price}}
+					 </span>
+					 <span class="trial_txt">(Free trial 6 months)</span>
+				 </td>
+						<td class="default"><span class="txt-top"></span><button *ngIf="advancedDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="advancedDetails[0].price != 'contact'" class="txt-l">{{advancedDetails[0].price}}
+						</span>
+						<span class="trial_txt">(Free trial 6 months)</span>
+					</td>
+						<td class="default"><span class="txt-top"></span><button *ngIf="premiumDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="premiumDetails[0].price != 'contact'" class="txt-l">{{premiumDetails[0].price}}
+						</span>
+						<span class="trial_txt trial_top_spc">(Free trial 6 months)</span>
+					</td>
+					</tr>
+				<tr>
+					<td>Number of parks</td>
+					<!-- <td><span class="tick">1</span></td> -->
+					<td><span class="tick">1</span></td>
+					<td><span class="tick">2</span></td>
+					<td><span class="tick">Unlimited</span></td>
+				  </tr>
+				  <tr>
+					<td>Number of grounds</td>
+					<!-- <td><span class="tick">5</span></td> -->
+					<td><span class="tick">5</span></td>
+					<td><span class="tick">10</span></td>
+					<td><span class="tick">Unlimited</span></td>
+				  </tr>
+				  <tr>
+					<td>Number of sports</td>
+					<!-- <td><span class="tick">3</span></td> -->
+					<td><span class="tick">3</span></td>
+					<td><span class="tick">Unlimited</span></td>
+					<td><span class="tick">Unlimited</span></td>
+					</tr>
+					<tr>
+						<td>Number of administrators</td>
+						<!-- <td><span class="tick">3</span></td> -->
+						<td><span class="tick">2</span></td>
+						<td><span class="tick">Unlimited</span></td>
+						<td><span class="tick">Unlimited</span></td>
+						</tr>
+				<tr>
+				  <td colspan="4" class="sep">Get started easily</td>
+				</tr>
+				<tr>
+				  <td>Includes free updates and new features as they become available</td>
+				  <!-- <td><span class="tick">&#10004;</span></td> -->
+				  <td><span class="tick">&#10004;</span></td>
+				  <td class="default"><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				</tr>
+				<!-- <tr>
+				  <td>No software to install — sign up online in moments</td>
+				  <td><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				  <td class="default"><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				</tr> -->
+				<!-- <tr>
+				  <td>Convience fee for users while booking*</td>
+				  <td><span class="tick">&#10004;</span></td>
+				  <td></td>
+				  <td></td>
+				  <td></td>
+				</tr> -->
+				<tr>
+				  <td>Accept payments through paypal</td>
+				  <!-- <td><span class="tick">&#10004;</span></td> -->
+				  <td><span class="tick">&#10004;</span></td>
+				  <td class="default"><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				</tr>
+				<tr>
+				  <td colspan="4" class="sep">Stay protected and get support</td>
+				</tr>
+				<tr>
+					<td>Automatic data backups</td>
+					<!-- <td><span class="tick">&#10004;</span></td> -->
+					<td><span class="tick">&#10004;</span></td>
+					<td class="default"><span class="tick">&#10004;</span></td>
+					<td><span class="tick">&#10004;</span></td>
+				</tr>
+				<tr>
+				  <td>24/7 Support</td>
+				  <!-- <td></td> -->
+				  <td><span class="tick"></span></td>
+				  <td class="default"><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				</tr>
+				<!-- <tr>
+				  <td>Strong encryption protects your business data</td>
+				  <td><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				  <td class="default"><span class="tick">&#10004;</span></td>
+				  <td><span class="tick">&#10004;</span></td>
+				</tr> -->
+			  </tbody>
+			</table>
+			<!-- <br> -->
+			<button type="button" class="hm_log_btn" (click)="routeToSignUp()">Sign Up</button>  
+			</div>
+		    <!-- row end -->
+
+			</p-tabPanel>
+			<p-tabPanel header="Pay as you go">
+		    	<div class="row">
+		    	<div class="pay_as_go">
+             	<ul>
+				
+				<li class="slt_prc_blk">
+				<h6>Slot based pricing</h6>
+				</li>
+				<li>
+					<i class="tick">&#10004;</i>
+					<span>Minimum 50&#162; per slot / 10% of slot price</span>
+				  </li>
+				<li>
+					<i class="tick">&#10004;</i>
+					<span>Unlimited parks</span>
+				  </li>
+
+				  <li>
+					<i class="tick">&#10004;</i>
+					<span>Unlimited grounds</span>
+				  </li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+					<span>Unlimited sports</span>
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+					<span>Unlimited administrators</span>
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+				  	<span>Get started easily</span>
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+				  	<span>Includes free updates and new features as they become available</span>				
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+				  	<span>Accept payments through paypal</span>
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+				  	<span>Stay protected and get support</span>
+				</li>
+
+				<li>
+					<i class="tick">&#10004;</i>
+					<span>Automatic data backups</span>
+				</li>
+				
+				<li>
+					<i class="tick">&#10004;</i>
+				  	<span>24/7 Support</span>
+				</li>
+
+			</ul>
+
+              <button type="button" class="hm_log_btn" (click)="routeToSignUp()">Sign Up</button> 
+              <div class="clr">&nbsp;</div> 
+			</div>
+
+			</div>
+
+
+			</p-tabPanel>
+			</p-tabView>
+
+	
+		
+		</div>
+		</div>
+		</div>
+		

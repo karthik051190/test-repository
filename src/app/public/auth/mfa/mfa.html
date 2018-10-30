@@ -1,0 +1,9 @@
+<div class="col-md-12">
+    <div class="mfa_blk">
+        <p>Authentication code has been sent to: {{destination}}</p>
+        <div class="form-group">
+            <input id="mfaCode" required type="text" maxlength="10" class="form-control" length="40" #code>
+        </div>
+        <button (click)="onSubmit(code.value)" type="submit" class="pass_sbmt_btn">Submit code</button>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+.logout-button
+{
+  position: fixed;
+  top: 15%;
+  right: 1%;
+}
+.defaultstyle{
+  margin-top: 1%;
+}
+.defaultstyle .ui-inputtext{
+  background: #ffffff;
+  color: #777;
+}
+.welcomediv{
+  /*align-self: center;*/
+  width: 30%;
+}
+
+.feature-div {
+  padding:10px;
+  padding-top: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: rgba(255,255,255,0.7);
+  /*margin:0 0 0 10px;*/
+  /*border :2px solid darkgray;*/
+  border-radius: 5px;
+  border-style: groove;
+  padding-left:5px !important;
+  /*margin: 5px !important;*/
+  overflow: auto;
+  width:28%; /* The width is 100%, when the viewport is 800px or smaller */
+  margin-left: 35%;
+  margin-top: 4%;
+}
+
+@media screen and (min-width:1500px) {
+  .headerstyle {
+    border-bottom: 3px solid;
+    /*background-color: lightgrey;*/
+    /*border-style: solid;*/
+    font-size: 17px;
+    padding-left: 27%;
+    padding-right: 27%;
+  }
+}
+
+@media screen and (min-width:601px ) and (max-width: 1185px) {
+  .headerstyle {
+    border-bottom: 3px solid;
+    /*background-color: lightgrey;*/
+    /*border-style: solid;*/
+    font-size: 16px;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .headerstyle {
+    border-bottom: 3px solid;
+    /*background-color: lightgrey;*/
+    /*border-style: solid;*/
+    font-size: 15px;
+    padding-left: 3%;
+    /*padding-right: 15%;*/
+  }
+}

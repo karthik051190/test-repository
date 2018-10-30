@@ -1,0 +1,101 @@
+<!-- content start -->
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+
+<div *ngIf="!error && !unauthorized && noRequests" class="tot_cntnt">
+    <div class="container">
+        <!-- admin section start -->
+        <div class="admin_sctn">
+            <!-- admin list header start -->
+            <div class="admin_hdr row">
+            </div>
+            <div> No Active Requests </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="!error && !unauthorized && !noRequests" class="tot_cntnt">
+    <div class="container">
+        <!-- admin section start -->
+        <div class="admin_sctn">
+            <!-- admin list header start -->
+            <div class="admin_hdr row">
+                <div class="col-md-3 col-xs-3">
+                    <h2>Org Name</h2>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <h2>Address</h2>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <h2>Domain</h2>
+                </div>
+                <!-- <div class="col-md-2 col-xs-2"><h2>User Email</h2></div> -->
+
+            </div>
+            <!-- admin list header end -->
+            <!-- admin list start -->
+            <div class="admin_lst row" *ngFor="let request of cityRequests">
+                <!-- city name start -->
+                <div class="col-md-3 col-xs-3">
+                    <h3>{{request.cityName}}</h3>
+                </div>
+                <!-- city name end -->
+
+                <!-- city state start -->
+                <!-- <div class="col-md-2 col-xs-2"><h3>{{request.state}}</h3></div> -->
+                <!-- city state end -->
+
+                <!-- address start -->
+                <div class="col-md-3 col-xs-3">
+                    <h3>{{request.street}}, {{request.city}}, {{request.state}}, {{request.zipCode}}</h3>
+                </div>
+                <!-- address end -->
+
+                <!-- city domain start -->
+                <div class="col-md-3 col-xs-3">
+                    <h3>{{request.domain}}.fieldsmanager.com</h3>
+                </div>
+                <!-- city domain end -->
+
+                <!-- admin status start -->
+                <!-- <div class="col-md-2 col-xs-2"><h3>{{request.permission}}</h3></div> -->
+                <!-- admin status end -->
+
+                <div class="col-md-2 col-xs-2">
+                    <div class="lst_actns">
+                        <!-- accept icon start -->
+                        <button type="submit" class="btn btn-primary save_btn" (click)="acceptRequest(request.cityId)"><img
+                                src="../../../assets/slotsAssets/img/save_icon.png" /></button>
+                        <!-- accept icon end -->
+                        <!-- decline icon start -->
+                        <button type="submit" class="btn btn-primary cncel_btn" (click)="declineRequest(request.cityId)"><img
+                                src="../../../assets/slotsAssets/img/cancel_icon.png" /></button>
+                        <!-- decline icon end -->
+                    </div>
+                </div>
+            </div>
+            <!-- admin list end -->
+        </div>
+        <!-- admin section end -->
+        <!-- add admin btn start -->
+        <!-- <button class="add_grnd_btn" (click)="onClickAddAdmin()"><img src="../../../assets/slotsAssets/img/plus_icon.png" /></button> -->
+        <!-- add admin btn end -->
+    </div>
+    <p-confirmDialog></p-confirmDialog>
+</div>
+<!-- content end -->
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>

@@ -1,0 +1,36 @@
+<div class="tot_cntnt">
+    <div class="container mb_cntinr">
+        <!-- parks section start -->
+        <div class="admin_sctn">
+            <!-- parks list header start -->
+            <div *ngIf="!noParks">
+                <!-- class="admin_hdr row" -->
+                <div class="unauthorized_blk">
+
+
+                    <div class="not_sport">
+                        <img src="../../../assets/img/not_sport.png" />
+                    </div>
+
+
+                    <h1><i class="glyphicon glyphicon-warning-sign"></i> Error</h1>
+                    <p>Opps! An unexpected error occured, Try reloading the page.</p>
+                    <p> If the problem persists, Please contact technical support @ (214)206-8976 !</p>
+
+                </div>
+            </div>
+            <!-- parks list header end -->
+        </div>
+    </div>
+</div>
+
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>

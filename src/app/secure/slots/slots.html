@@ -1,0 +1,338 @@
+
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<div *ngIf="!error && !unauthorized" class="tot_cntnt">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="tot_clndr_blk">
+                    <button type="button" class="btn btn-primary btn-lg add_slot_btn" data-toggle="modal" data-target="#addSlot">Add Slot</button>   
+                    <div class="clr"></div>
+                    <div class="clndr_blk">
+                    <app-slots-calendar [selectedSport]="selectedSport" [selectedGroundName]="selectedGroundInstanceName" [selectedGround]="selectedGroundInstance" (slotsCountChange) = 'displayCounter($event)' (unauthorizedOut)= 'unauthorizedIn($event)' (errorOut)= 'errorIn($event)'></app-slots-calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="rgt_park">
+                    <div class="park_slct" disabled="true">
+                        <select>
+                            <option>{{selectedPark}}</option>
+                        </select>
+                    </div>
+                    <div class="park_slct">
+                        <p-dropdown [autoWidth]=false [options]="this.allGrounds" [(ngModel)]="selectedGround" name="something" placeholder="Ground Name" (onChange)="getSportsByGround(selectedGround)"></p-dropdown>
+                    </div>
+                    <div class="park_slct">
+                        <p-dropdown [autoWidth]=false [options]="this.allSports" [(ngModel)]="selectedSport" name="something" placeholder="All Sports" (onChange)="onSportChange(selectedSport)"></p-dropdown>
+                    </div>
+                    <div style="margin-top: 82% !important;" class="park_pie">
+                        <p-chart type="pie" width="40" height="400" [(data)]="data" [options]="options"></p-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add slot modal start -->
+<div class="modal fade add_slot_modal" id="addSlot" tabindex="-1" role="dialog" aria-labelledby="addSlotLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="addslot" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="addSlotLabel">Add Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="add_slot_tabs">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Single Slot</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Slot Schedule</a></li>
+                    </ul>
+                    <div class="clr">&nbsp;</div>
+                    <hr class="tab_brder" />
+
+
+                    <!-- Tab panes -->
+                    <div class="tab-content add_slot_cntnt">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                        <form>
+                            <div class="single_slot">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <select disabled class="disabled_slct">
+                                                    <option>{{selectedPark}}</option>
+                                                    <!-- <option>Bakers Field one</option> -->
+                                                    <!-- <option>Bakers Field two</option> -->
+                                                    <!-- <option>Bakers Field three</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <p-dropdown [autoWidth]=false [options]="this.allGrounds" [(ngModel)]="createSlot.groundId" name="createSlot.groundId" placeholder="Select Ground" (onChange)="getSports(createSlot.groundId.Ground_Id)"></p-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <!-- <select>
+                                                    <option *ngFor="let sport of allSports">{{sport.label}}</option>
+                                                </select> -->
+                                                <p-dropdown [autoWidth]=false [options]="this.Sports" [(ngModel)]="createSlot.sportId" name="something" placeholder="Select Sport"></p-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar placeholder="Select Date" [(ngModel)]="createSlot.date" (onSelect)="generateOpenDates(createSlot.date)" name="date"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar [(ngModel)]="createSlot.startTime" timeOnly="true" placeholder="Start Time" showTime="true" (onSelect)="onSelect($event)" hourFormat="12" name="startTime"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="From Time"> -->
+                                                <span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar [(ngModel)]="createSlot.endTime" timeOnly="true" placeholder="End Time" showTime="true" hourFormat="12" name="endTime"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="To Time"> -->
+                                                <span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="color: red; font-size: smaller" *ngIf="createSlot.endTime <= createSlot.startTime">
+                                        End time must be greater than start time!
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <h5 class="first">Slot Open Dates</h5>
+                                        <div class="ui-g" style="margin-bottom:5px">
+                                            <div class="ui-g-12"><p-radioButton name="group1" value="always" label="Open always (until the day before the slot's date)." [(ngModel)]="createSlot.slotCategory" inputId="opt3" (onClick)="setSlotOpenDates('always')"></p-radioButton></div>
+                                            <div class="ui-g-12"><p-radioButton name="group1" value="custom" label="Custom Open Dates" [(ngModel)]="createSlot.slotCategory" inputId="opt2" (onClick)="setSlotOpenDates('custom')"></p-radioButton></div>
+                                        </div>
+                                            <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showSlotCustomDates" class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar placeholder="Booking Open Date" [(ngModel)]="createSlot.openDate" name="openDate"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar placeholder="Booking Close Date" [(ngModel)]="createSlot.closeDate" name="closeDate"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                            <label class="switch switch_type1" role="switch">
+                                                <input type="checkbox" class="switch__toggle" [(ngModel)]="createSlot.autoFIFO" name="autoFIFO">
+                                                <span class="switch__label"></span>
+                                            </label>
+                                            <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                        </div>
+                                        <span class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Auto FIFO Approval (Automatically approve slot to the first request)</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                            <label class="switch switch_type1" role="switch">
+                                                <input type="checkbox" class="switch__toggle" [(ngModel)]="createSlot.paidSlot" name="paidSlot">
+                                                <span class="switch__label"></span>
+                                            </label>
+                                            <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                        </div>
+                                        <span class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Paid Slot</span>
+                                    </div>
+                                    <div *ngIf="createSlot.paidSlot" class="col-md-12">
+                                        <span class="col-md-12">Slot Price*: <input type="text" placeholder="Slot Price in $" [(ngModel)]="createSlot.slotPrice" name="openDate"></span>
+                                    </div>
+                            </div>
+
+
+                             <div class="modal-footer">
+                                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="clearAddSlot()">
+                                    <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                                </button>
+                                <button [disabled]="createSlot.endTime <= createSlot.startTime" type="button" class="btn btn-primary save_btn" (click)="addSlot(createSlot)">
+                                    <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                                </button>
+                            </div>
+                            </form>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                        <form>
+                            <div class="single_slot">
+                                <!-- <form> -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <select disabled class="disabled_slct">
+                                                    <option>{{selectedPark}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <p-dropdown [autoWidth]=false [options]="this.allGrounds" [(ngModel)]="createSchedule.groundId" name="createSchedule.groundId" placeholder="Select Ground" (onChange)="getSports(createSchedule.groundId.Ground_Id)"></p-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="grnd_slct">
+                                                <p-dropdown [autoWidth]=false [options]="this.Sports" [(ngModel)]="createSchedule.sportId" name="something" placeholder="Select Sport"></p-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar placeholder="Select Start Date" [(ngModel)]="createSchedule.startDate" name="startDate"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar placeholder="Select End Date" [(ngModel)]="createSchedule.endDate" [minDate]="createSchedule.startDate" name="endDate"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="End Date"> -->
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar [(ngModel)]="createSchedule.startTime" timeOnly="true" placeholder="Start Time" showTime="true" hourFormat="12" name="startTime"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="From Time"> -->
+                                                <span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback">
+                                                <p-calendar [(ngModel)]="createSchedule.endTime" timeOnly="true" placeholder="End Time" showTime="true" hourFormat="12" name="endTime"></p-calendar>
+                                                <!-- <input type="text" class="form-control" placeholder="To Time"> -->
+                                                <span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="color: red; font-size: smaller" *ngIf="createSchedule.endTime <= createSchedule.startTime">
+                                        End time must be greater than start time!
+                                      </div>
+                                    <div class="row">
+                                        <div class="week_check">
+                                            <ul class="week_chck_box">
+                                                <li *ngFor="let day of scheduleDays; let i of index">
+                                                    <div class="check_div">
+                                                        <input type="checkbox" (change)="onDaySelection(day)" [checked]="weekDays[day]" [value]="day" id="{{day}}" name="weekDays">
+                                                        <label for="{{day}}"></label>
+                                                    </div>
+                                                    <span>{{day}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <h5 class="first">Slot Open Dates</h5>
+                                        <div class="ui-g" style="margin-bottom:5px">
+                                            <div class="ui-g-12"><p-radioButton name="group1" value="default" label="Open this slot only the week before the slot." [(ngModel)]="createSchedule.scheduleCategory" inputId="opt1" (onClick)="setScheduleOpenDates('defalut')"></p-radioButton></div>
+                                            <div class="ui-g-12"><p-radioButton name="group1" value="always" label="Open always (until the day before the slot's date)." [(ngModel)]="createSchedule.scheduleCategory" inputId="opt2" (onClick)="setScheduleOpenDates('always')"></p-radioButton></div>
+                                            <div class="ui-g-12"><p-radioButton name="group1" value="custom" label="Custom Open Dates" [(ngModel)]="createSchedule.scheduleCategory" inputId="opt3" (onClick)="setScheduleOpenDates('custom')"></p-radioButton></div>
+                                        </div>
+                                            <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showScheduleCustomDates" class="col-md-12">
+                                        <span class="col-md-12">Open Slot before  <input type="text" placeholder="No of days" [(ngModel)]="createSchedule.openBefore" name="openDate"> days</span>
+                                        <span class="col-md-12">Close Slot before  <input type="text" placeholder="No of days" [(ngModel)]="createSchedule.closeBefore" name="closeDate"> days</span>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                            <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                                <label class="switch switch_type1" role="switch">
+                                                    <input type="checkbox" class="switch__toggle" [(ngModel)]="createSchedule.autoFIFO" name="autoFIFO">
+                                                    <span class="switch__label"></span>
+                                                </label>
+                                                <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                            </div>
+                                            <p class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Auto FIFO Approval (Automatically approve all scheduled slots to the first request)</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                            <label class="switch switch_type1" role="switch">
+                                                <input type="checkbox" class="switch__toggle" [(ngModel)]="createSchedule.paidSlot" name="paidSlot">
+                                                <span class="switch__label"></span>
+                                            </label>
+                                            <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                                        </div>
+                                        <span class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Paid Slot</span>
+                                    </div>
+                                    <div *ngIf="createSchedule.paidSlot" class="col-md-12">
+                                        <span class="col-md-12">Slot Price*: <input type="text" placeholder="Slot Price in $" [(ngModel)]="createSchedule.slotPrice" name="openDate"></span>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="clearAddSchedule()">
+                                    <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                                </button>
+                                <button type="button" class="btn btn-primary save_btn" (disabled)="createSchedule.endTime <= createSchedule.startTime" (click)="addSchedule(createSchedule)">
+                                    <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                                </button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active"
+             style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>
+<!-- add slot modal end -->
+
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>

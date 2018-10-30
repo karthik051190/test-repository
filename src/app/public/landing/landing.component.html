@@ -1,0 +1,101 @@
+<!-- landing page top block start -->
+<div class="landin_tp">
+
+    <!-- landing logo start -->
+  <div class="landin_logo">
+    <img src={{somevalue}} (error)="updateUrl($event)" />
+  </div>
+  <!-- landing logo end -->
+
+  <div class="lnd_log_blk">
+    <ul>
+      <!--<li style="cursor: pointer"><a (click)=routeFM() class="hm_log_btn">Reserve A Field<div></div></a></li>-->
+      <!-- <li style="cursor: pointer"><a href="http://fmtx.fieldsmanager.com/home/land" class="hm_log_btn">Reserve A Field<div></div></a></li> -->
+      <!-- <li style="cursor: pointer"><a (click)=goHome() class="hm_log_btn">Admin Login<div></div></a></li> -->
+      <li style="cursor: pointer"><a (click)=goToPricing() class="hm_log_btn">Pricing<div></div></a></li>
+      <li style="cursor: pointer"><a (click)=addCity() class="hm_log_btn">Sign Up<div></div></a></li>
+    </ul>
+  </div> 
+<!--   </div> -->
+<!--   <div class="clr"></div> -->
+  <!-- landing logo start -->
+<!--   <div class="landin_logo"> -->
+<!--     <img src="../../../assets/img/lnd_fields_logo.png" /> -->
+<!--   </div> -->
+  <!-- landing logo end -->
+
+
+<div class="clr"></div>
+  <!-- landing page content start -->
+<div class="landin_cntnt">
+<div class="container">
+<h3>Fields Manager</h3>
+<p>An application that helps you manage fields and reservations!</p>
+
+<!-- <div class="city_slct">
+<select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+</div> -->
+<div class="hm_city col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+     <form name="myForm" [formGroup]="cityData">
+  <div class="hm_city_slct col-md-9 col-sm-9 col-xs-7">
+    <p-dropdown class="certField new_drop_selet aut_cntry_slct" formControlName="city" [options]="citiesInfo" [ngModel]="cityData.value.city" placeholder="Pick a place" name="City"></p-dropdown>
+  </div>
+  <button (click)="findSlot()" [disabled]="cityData.value.city === '' || cityData.value.city === undefined" class="col-md-3 col-sm-3 col-xs-5">Find Slots <i class="glyphicon glyphicon-search"></i></button>
+    </form>
+  </div>
+
+  
+</div>
+</div>
+
+<!-- landing page content end -->
+<div class="clr">&nbsp;</div>
+<div class="hm_copyright_txt">
+<p>© 2018 Copyright: Powered by <a href="https://www.bizcloudexperts.com/">BizCloud Experts</a></p>
+</div>
+</div>
+
+<!-- landing page top block end -->
+<!-- <div class="lnd_cntnt">
+  <div class="container">
+    <div class="sprts_grnd">
+      <div class="col-md-3">
+      <div class="sprts_grnd_img">
+        <img src="../../../assets/img/basketball-court.png" />
+      </div>
+      </div>
+      <div class="col-md-8">
+      <div class="sprts_grnd_cntnt">
+        <h2>Ad iisque discere dolorem mel</h2>
+        <p>Lorem ipsum dolor sit amet, stet gloriatur sea ei, eum tollit facete at. In mel nostrud mediocrem, sit at invidunt definiebas. Ex vocent impetus expetendis eum. Id sint equidem per, ad iisque discere dolorem mel, ullum similique sed ut. Has ea novum erant, wisi option appetere vim ei, ei duo cibo numquam instructior. Stet gloriatur sea ei, eum tollit facete at. In mel nostrud mediocrem, sit at invidunt definiebas. Ex vocent impetus expetendis eum. Id sint equidem per, ad iisque discere dolorem mel, ullum similique sed ut. Has ea novum erant, wisi option appetere vim ei, ei duo cibo numquam instructior.</p>
+        <p>Stet gloriatur sea ei, eum tollit facete at. In mel nostrud mediocrem, sit at invidunt definiebas. Ex vocent impetus expetendis eum. Id sint equidem per, ad iisque discere dolorem mel, ullum similique sed ut. Has ea novum erant, wisi option appetere vim ei, ei duo cibo numquam instructior.</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!--<router-outlet></router-outlet>-->
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+  <div id="loadingModal" style="overflow-y:visible; ">
+      <h3 style="text-align: center;">Loading...</h3>
+      <br>
+      <div class="progress progress-striped active" style="margin-bottom:0;
+             width: 100%;">
+          <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+      </div>
+  </div>
+</p-dialog>
+<style type="text/css">
+    .hm_copyright_txt{width: 100%;text-align: center;position: absolute;margin-top: 35vh;left: 0;right: 0;}
+    .hm_copyright_txt p{font-weight: normal;}
+.hm_copyright_txt p a{color: #000518!important;font-weight: bold;}
+.hm_copyright_txt p a:hover{text-decoration: none;}
+</style>

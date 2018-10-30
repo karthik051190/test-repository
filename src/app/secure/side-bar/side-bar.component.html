@@ -1,0 +1,25 @@
+<!--<app-top-nav></app-top-nav>-->
+<div class="side_nav" id="menu-box">
+  <ul>
+    <li [ngClass]="{ 'active': isActive === '/admin/slots' }" (click)="addActive()"><a [routerLink]="['/admin/slots']">
+        <img class="nav_normal" src="../../../assets/slotsAssets/img/forma_icon.png" />
+        <img class="nav_active" src="../../../assets/slotsAssets/img/forma_active_icon.png" />
+        <span>Slots</span>
+      </a></li>
+    <li [ngClass]="{'active': isActive === '/admin/grounds' }" id="2" (click)="addActive()"><a [routerLink]="['/admin/grounds']">
+        <img class="nav_normal" src="../../../assets/slotsAssets/img/nav_two_icon.png" />
+        <img class="nav_active" src="../../../assets/slotsAssets/img/nav_two_active_icon.png" />
+        <span>Grounds</span>
+      </a></li>
+      <li [ngClass]="{'active': isActive === '/admin/parks' }" id="4" (click)="addActive()"><a [routerLink]="['/admin/parks']">
+        <img class="nav_normal" src="../../../assets/slotsAssets/img/park_icon.png" />
+        <img class="nav_active" src="../../../assets/slotsAssets/img/park_active_icon.png" />
+        <span>Parks</span>
+      </a></li>
+    <li [ngClass]="{'active': isActive === '/admin/admins' }" id="3" (click)="addActive()"><a [routerLink]="['/admin/admins']">
+        <img class="nav_normal" src="../../../assets/slotsAssets/img/user_icon.png" />
+        <img class="nav_active" src="../../../assets/slotsAssets/img/user_active_icon.png" />
+        <span>Admins</span>
+      </a></li>
+  </ul>
+</div>

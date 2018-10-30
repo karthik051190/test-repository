@@ -1,0 +1,81 @@
+<!-- fields home start -->
+<div class="container-fluid fild_hm gr_form">
+    <!-- fields home left form start -->
+
+    <div class="row gr_form_bg">
+        <div class="gr_form_lft">
+            <div class="fild_hm_lft">
+                <a href="#" class="fild_hm_logo"><img src={{somevalue}} (error)="updateUrl($event)" /></a>
+                <h3>Admin Login</h3>
+                <div *ngIf="errorMessage!=null" class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+                <div *ngIf="!mfaStep">
+                    <form class="gr_resrve_frm">
+                        <ul>
+
+                            <li class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group has-feedback">
+                                        <input id="signupEmail" required type="email" maxlength="100" class="form-control"
+                                            [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Username or Email">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group has-feedback">
+                                        <input id="signupPassword" required type="password" maxlength="25" class="form-control"
+                                            length="40" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"
+                                            placeholder="Password">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="row" [routerLink]="['/home/forgotPassword']">
+                                <div class="col-md-12"><a class="forget_pass">Forgot your password? </a></div>
+                            </li>
+
+                        </ul>
+                        <div>
+                            <div (click)="onLogin()" id="signupSubmit" type="submit" class="col-md-12"><button class="nxt_btn">Log
+                                    In</button></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group" *ngIf="mfaStep">
+                    <app-mfa [destination]="mfaData.destination" [onSubmit]="mfaData.callback"></app-mfa>
+                    <hr>
+                    <a (click)="cancelMFA()" href="">Cancel</a>
+                </div>
+                <!--<app-forgotPassword></app-forgotPassword>-->
+                <!--<app-forgotPasswordStep2></app-forgotPasswordStep2>-->
+            </div>
+        </div>
+        <!-- fields home left form end -->
+        <!-- fields home right start -->
+        <div class="gr_form_rgt fild_hm_rgt">
+            <div class="hm_rgt_title">
+                <h3>{{ cityName }} - Fields Manager</h3>
+                <p>{{ address }}<br></p>
+                    <!-- {{ cityName }}, {{ state }}</p> -->
+            </div>
+            <div class="hm_copyright_txt">
+                <p>© 2018 Copyright: Powered by <a href="https://www.bizcloudexperts.com/">BizCloud Experts</a></p>
+            </div>
+        </div>
+        <!-- fields home right end -->
+    </div>
+</div>
+<!-- fields home end -->
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>

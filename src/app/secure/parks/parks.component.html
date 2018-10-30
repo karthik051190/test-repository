@@ -1,0 +1,203 @@
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<div *ngIf="!error && !unauthorized" class="tot_cntnt">
+    <div class="container mb_cntinr">
+        <!-- parks section start -->
+        <div class="admin_sctn">
+            <!-- parks list header start -->
+            <div *ngIf="!noParks" class="admin_hdr row">
+                <div class="col-md-4 col-sm-3">
+                    <h2>Name</h2>
+                </div>
+                <div class="col-md-4 col-sm-3">
+                    <h2>Address</h2>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <h2>Website</h2>
+                </div>
+            </div>
+            <!-- parks list header end -->
+
+            <!-- parks list start -->
+            <div *ngIf="noParks">
+                <h3>No Parks Available</h3>
+            </div>
+            <div class="admin_lst row" *ngFor="let park of parksList">
+                <!-- parks name start -->
+                <div class="col-md-4 col-sm-3">
+                    <h3>{{park.parkname}}</h3>
+                </div>
+                <!-- parks name end -->
+
+                <!-- parks address start -->
+                <div class="col-md-4 col-sm-3">
+                    <h3>{{park.address}}</h3>
+                </div>
+                <!-- parks address end -->
+
+                <!-- parks website start -->
+                <div class="col-md-2 col-sm-3">
+                    <h3>{{park.website}}</h3>
+                </div>
+                <!-- parks website end -->
+
+                <div class="col-md-2 col-sm-3">
+                    <div class="lst_actns">
+                        <!-- delete icon start -->
+                        <button type="submit" class="lst_dlt_icn" (click)="confirmDelete(park)"><img src="../../../assets/slotsAssets/img/delete_icon.png" /></button>
+                        <!-- delete icon end -->
+                        <!--<p-confirmDialog></p-confirmDialog>-->
+                        <!-- edit icon start -->
+                        <button type="submit" class="lst_edit_icn" (click)="onClickEditPark(park)"><img src="../../../assets/slotsAssets/img/edit_icon.png" /></button>
+                        <!-- edit icon end -->
+                    </div>
+                </div>
+            </div>
+            <p-confirmDialog></p-confirmDialog>
+            <!-- parks list end -->
+        </div>
+        <!-- parks section end -->
+        <!-- Add Park modal start -->
+        <p-dialog header="Add Park" [draggable]="false" [visible]="addParkDialog" [closable]="true" [resizable]="false"
+            id="add-park" class="add_park_modal">
+            <!--<div class="modal fade add_slot_modal bs-example-modal-sm" role="dialog" aria-labelledby="addGroundLabel">-->
+            <!--<div class="modal-dialog modal-sm" role="document">-->
+            <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+            <!--<img src="../../../assets/slotsAssets/img/close_icon.png" />-->
+            <!--</button>-->
+            <!--<h4 class="modal-title" id="addGroundLabel">Add Park</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+            <!--<div class="add_slot_tabs add_grund">-->
+
+            <!-- Tab panes -->
+            <!--<div class="add_slot_cntnt add_grund_cntnt">-->
+            <form [formGroup]="parkform">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkName" [(ngModel)]="parkData.parkName" type="text" placeholder="Park Name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkAddress" [(ngModel)]="parkData.address" type="text" placeholder="Address">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkWebsite" [(ngModel)]="parkData.website" type="text" placeholder="Website">
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--</form>-->
+                <!--</div>-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cncel_btn" (click)="cancelAddPark()">
+                        <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                    </button>
+                    <button type="button" [disabled]="parkform.invalid" class="btn btn-primary save_btn" (click)="addPark()">
+                        <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                    </button>
+                </div>
+            </form>
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </p-dialog>
+        <!-- Add Park modal end -->
+
+        <!-- Edit Park modal start -->
+        <p-dialog header="Edit Park" [draggable]="false" id="edit-park" [visible]="editParkDialog" [closable]="true"
+            [resizable]="false" class="add_park_modal">
+            <!--<div class="modal fade add_slot_modal bs-example-modal-sm" role="dialog" aria-labelledby="addGroundLabel">-->
+            <!--<div class="modal-dialog modal-sm" role="document">-->
+            <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+            <!--<img src="../../../assets/slotsAssets/img/close_icon.png" />-->
+            <!--</button>-->
+            <!--<h4 class="modal-title" id="addGroundLabel">Add Park</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+            <!--<div class="add_slot_tabs add_grund">-->
+
+            <!-- Tab panes -->
+            <!--<div class="add_slot_cntnt add_grund_cntnt">-->
+            <form [formGroup]="parkform">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkName" [(ngModel)]="parkData.parkName" type="text" placeholder="Park Name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkAddress" [(ngModel)]="parkData.address" type="text" placeholder="Address">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <input formControlName="parkWebsite" [(ngModel)]="parkData.website" type="text" placeholder="Website">
+                        </div>
+                    </div>
+                </div>
+
+                <!--</div>-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cncel_btn" (click)="cancelEditPark()">
+                        <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                    </button>
+                    <button type="button" [disabled]="parkform.invalid" class="btn btn-primary save_btn" (click)="editPark()">
+                        <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                    </button>
+                </div>
+            </form>
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </p-dialog>
+        <!-- Edit Park modal end -->
+
+        <!-- add ground btn start -->
+        <button class="add_grnd_btn" (click)="onClickAddPark()"><img src="../../../assets/slotsAssets/img/plus_icon.png" /></button>
+        <!-- add ground btn end -->
+    </div>
+</div>
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>

@@ -1,0 +1,187 @@
+<!--<div id="wrapper">-->
+
+<!--&lt;!&ndash; Navigation &ndash;&gt;-->
+<!--<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">-->
+<!--<div class="navbar-header">-->
+<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
+<!--<span class="sr-only">Toggle navigation</span>-->
+<!--<span class="icon-bar"></span>-->
+<!--<span class="icon-bar"></span>-->
+<!--<span class="icon-bar"></span>-->
+<!--</button>-->
+<!--<a class="navbar-brand" href="index.html">Cognito Startup</a>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.navbar-header &ndash;&gt;-->
+
+<!--<ul class="nav navbar-top-links navbar-right">-->
+
+<!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+<!--<li class="dropdown">-->
+<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+<!--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>-->
+<!--</a>-->
+<!--<ul class="dropdown-menu dropdown-user">-->
+<!--<li><a [routerLink]="['/admin/parkDefaults']"><i class="fa fa-user fa-fw"></i> Switch Park</a>-->
+<!--</li>-->
+<!--<li class="divider"></li>-->
+<!--<li><a [routerLink]="['/admin/logout']">Logout</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--&lt;!&ndash; /.dropdown-user &ndash;&gt;-->
+<!--</li>-->
+<!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+<!--</ul>-->
+<!--&lt;!&ndash; /.navbar-top-links &ndash;&gt;-->
+
+<!--<div class="navbar-default sidebar" role="navigation">-->
+<!--<div class="sidebar-nav navbar-collapse">-->
+<!--<ul class="nav" id="side-menu">-->
+<!--<li>-->
+<!--<a [routerLink]="['/admin/slots']"><i class="fa fa-table fa-fw"></i> Slots</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a [routerLink]="['/admin/grounds']"><i class="fa fa-dashboard fa-fw"></i> Grounds</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a [routerLink]="['/admin/parks']"><i class="fa fa-table fa-fw"></i> Parks</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a [routerLink]="['/admin/admins']"><i class="fa fa-table fa-fw"></i> Admins</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.sidebar-collapse &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.navbar-static-side &ndash;&gt;-->
+<!--</nav>-->
+
+<!--&lt;!&ndash; Page Content &ndash;&gt;-->
+<!--<div id="page-wrapper">-->
+<!--<div class="container-fluid">-->
+<!--<div class="row">-->
+<!--<div class="col-lg-12">-->
+<!--<router-outlet></router-outlet>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.col-lg-12 &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.row &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /#page-wrapper &ndash;&gt;-->
+
+<!--</div>-->
+<!--&lt;!&ndash; /#wrapper &ndash;&gt;-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--<meta charset="utf-8">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--<title>Fields Manager</title>-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+<!--<link rel="stylesheet" type="text/css" href="../../../assets/slotsAssets/css/bootstrap.min.css">-->
+<!--<link rel="stylesheet" type="text/css" href="../../../assets/slotsAssets/css/style.css">-->
+<!--<link rel="stylesheet" type="text/css" href="../../../assets/slotsAssets/fonts/glyphicons-halflings-regular.woff2">-->
+<!--</head>-->
+<!--<body>-->
+<!--  header start -->
+<header class="filds_hdr">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- logo start -->
+            <div class="navbar-header">
+                <span class="togle_icon" id="menu" (click)="toggleMenu()"><img src="../../../assets/slotsAssets/img/toggle_icon.png"></span>
+                <a class="navbar-brand brnd_logo" href="#"><img src={{somevalue}} (error)="updateUrl($event)"></a>
+            </div>
+            <!-- logo end -->
+            <!-- page title start -->
+            <h3 class="pag_title">{{ cityName }} - Fields Manager</h3>
+            <!-- page title end -->
+            <!-- profile dropdown start -->
+            <div class="dropdown prf_drp">
+
+                <!-- <div class="dropdown" dropdown>
+                  <h1 class="dropdown-toggle" dropdownToggle>J</h1>
+                  <ul class="dropdown-menu" dropdownMenu>
+                    <li><a class="neat" href="https://github.com/zurfyx/angular-custom-modal" rel="noopener" target="_blank">Check it out @ GitHub</a></li>
+                    <li><a class="neat" [routerLink]="['/admin/logout']">Logout</a></li>
+                  </ul>
+                </div> -->
+
+                <p-dropdown [autoWidth]=false [options]="this.userData" [(ngModel)]="selectedPage" [(ngModel)]="applicant"
+                    class="prof_drop" name="something" placeholder="{{this.repInitials}}" (onChange)="gotoPage(selectedPage)"></p-dropdown>
+
+                <!-- <div class="park_slct" disabled="true"> -->
+                <!-- <select>
+                        <option><a href="#">Option One</a></option>
+                        <option><a href="#">Option Two</a></option>
+                        <option><a href="#">Option Three</a></option>
+                        <option role="separator" class="divider"></option>
+                        <option><a [routerLink]="['/admin/logout']">Logout</a></option>
+                    </select> -->
+
+                <!-- </div> -->
+                <!--                 <button class="btn btn-default dropdown-toggle prf_drp_btn" type="button" data-toggle="dropdown" data-target="#dropdownMenu1" aria-haspopup="true" aria-expanded="false">
+                    <i>J</i>
+ -->
+                <!-- <span class="caret"></span> -->
+                <!--                 </button>
+                <ul class="dropdown-menu" id="dropdownMenu1" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Option One</a></li>
+                    <li><a href="#">Option Two</a></li>
+                    <li><a href="#">Option Three</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a [routerLink]="['/admin/logout']">Logout</a></li>
+                </ul>-->
+            </div>
+            <!-- profile dropdown end -->
+        </div>
+    </nav>
+</header>
+
+
+
+<!--<div class="side_nav">-->
+<!--<span class="togle_icon"><img src="../../../assets/slotsAssets/img/toggle_icon.png"> </span>-->
+<!--<ul>-->
+<!--<li class="active"><a [routerLink]="['/admin/slots']">-->
+<!--<img class="nav_normal" src="../../../assets/slotsAssets/img/forma_icon.png" />-->
+<!--<img class="nav_active" src="../../../assets/slotsAssets/img/forma_active_icon.png" />-->
+<!--</a></li>-->
+<!--<li><a [routerLink]="['/admin/grounds']">-->
+<!--<img class="nav_normal" src="../../../assets/slotsAssets/img/nav_two_icon.png" />-->
+<!--<img class="nav_active" src="../../../assets/slotsAssets/img/nav_two_active_icon.png" />-->
+<!--</a></li>-->
+<!--<li><a [routerLink]="['/admin/admins']">-->
+<!--<img class="nav_normal" src="../../../assets/slotsAssets/img/user_icon.png" />-->
+<!--<img class="nav_active" src="../../../assets/slotsAssets/img/user_active_icon.png" />-->
+<!--</a></li>-->
+<!--<li><a [routerLink]="['/admin/parks']">-->
+<!--<img class="nav_normal" src="../../../assets/slotsAssets/img/park_icon.png" />-->
+<!--<img class="nav_active" src="../../../assets/slotsAssets/img/park_active_icon.png" />-->
+<!--</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<app-top-nav></app-top-nav>-->
+
+<app-side-bar></app-side-bar>
+
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="">
+                <router-outlet></router-outlet>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,221 @@
+<!-- fields home start -->
+<div class="container-fluid fild_hm gr_form">
+    <!-- fields home left form start -->
+
+    <div class="row gr_form_bg">
+        <div class="gr_form_lft">
+            <div class="fild_hm_lft">
+                <button class="bck_btn fm_bck" *ngIf="userDetailsPage" (click)="onClickBack()"><i class="glyphicon glyphicon-menu-left"></i><span>Back</span></button>
+                <a href="#" class="fild_hm_logo"><img src={{somevalue}} (error)="updateUrl($event)"></a>
+                <h3>Ground Reservation Form</h3>
+                <div *ngIf="reservationMessageError!=null" class="alert alert-danger">
+                    {{ reservationMessageError }}
+                </div>
+                <div *ngIf="reservationMessageOverlap!=null" class="alert alert-warning">
+                    {{ reservationMessageOverlap }}
+                </div>
+                <div *ngIf="reservationMessageSuccess!=null" class="alert alert-success">
+                    {{ reservationMessageSuccess }}
+                </div>
+                <form [formGroup]="reservationform" class="gr_resrve_frm">
+                    <ul *ngIf="slotDetailsPage">
+                        <li class="fild_hm_slct fild_hm_drop">
+                            <p-dropdown [autoWidth]=false [options]="this.sportsList" [(ngModel)]="reservationData.sportId"
+                                formControlName="sportId" placeholder="Select a sport" (onChange)="getGroundsBySport(reservationData.sportId)"></p-dropdown>
+                        </li>
+
+                        <li class="fild_hm_slct fild_hm_drop">
+                            <p-dropdown [autoWidth]=false [options]="this.groundsList" [(ngModel)]="reservationData.groundId"
+                                formControlName="groundId" placeholder="Select a ground" (onChange)="getSlots(reservationData.groundId)"></p-dropdown>
+                        </li>
+
+                        <li class="fild_hm_clndr">
+                            <div class="form-group has-feedback">
+                                <p-calendar formControlName="selectedDate" [minDate]="minDate" [yearNavigator]="true" yearRange="2018:2030"
+                                [(ngModel)]="reservationData.selectedDate" [showIcon]="true" placeholder="Select a date" [monthNavigator]='true' (onMonthChange)="onMonthClick($event)"
+                                (onSelect)="onDateSelected()" readonlyInput="true">
+                                <ng-template pTemplate="date" let-date>
+                                    <span (click)='test(date)' [ngClass]="{'cal-color': opendates.indexOf(date.day) > -1 && openmonths.indexOf(date.month) > -1}" style="border-radius:80%; text-align: center">{{date.day}}</span>
+                                    <!-- <span [ngStyle]="{backgroun dColor: (date.day === 15) ? '#81C784' : 'inherit'}" style="border-radius:50%">{{date.day}}</span> -->
+                                 </ng-template>
+                                </p-calendar>
+                                <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                            </div>
+                        </li>
+
+                        <li class="fild_hm_drop">
+                            <div class="form-group has-feedback">
+                                <p-dropdown [autoWidth]="false" [options]="timeSlots" formControlName="timeSlot"
+                                    [(ngModel)]="reservationData.slot" placeholder={{slotsLabel}} (onChange)="onSelectSlot(reservationData.slot)"></p-dropdown>
+                                <span class="glyphicon glyphicon-time form-control-feedback input_icon tp_spac" aria-hidden="true"></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div>
+                        <br>
+                        <p *ngIf="slot_message !== ''">{{slot_message}}</p>
+                        <br>
+                    </div>
+                    <div class="row clr" *ngIf="slotDetailsPage">
+                        <div class="col-md-12"><button [disabled]="slotUnAvailable" class="nxt_btn" (click)="onCickNext()">Next <span> > </span></button></div>
+                    </div>
+                    <br *ngIf="slotDetailsPage">
+                    <br *ngIf="slotDetailsPage">
+                    <h5 *ngIf="slotDetailsPage">Not finding required slot?</h5>
+                    <a *ngIf="slotDetailsPage" href={{emailContent}}>Email Us!</a>
+                    <ul *ngIf="userDetailsPage">
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <input type="text" [(ngModel)]="reservationData.firstName" formControlName="firstName"
+                                        placeholder="First Name*" class="form-control">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <input type="text" [(ngModel)]="reservationData.lastName" formControlName="lastName"
+                                        placeholder="Last Name*" class="form-control">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <input class="form-control" type="text" [(ngModel)]="reservationData.residentOf"
+                                    formControlName="residentOf" placeholder="Resident Of (City Name) ">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <input type="text" [(ngModel)]="reservationData.teamName" formControlName="teamName"
+                                        placeholder="Team Name" class="form-control">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <input class="form-control" type="email" [(ngModel)]="reservationData.email"
+                                        formControlName="email" placeholder="Email*">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                            <div class="col-md-12">
+                                <div class="input-group has-feedback">
+                                    <div class="input-group-addon">+1</div>
+                                    <input type="number" [(ngModel)]="reservationData.phoneNumber" maxlength="10"
+                                        formControlName="phoneNum" placeholder="999-999-9999">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group has-feedback">
+                                        <re-captcha *ngIf="userDetailsPage" (resolved)="resolved($event)" siteKey="6LeNQXQUAAAAAGFebFqXIbedJ1IG9pxv02Y_Q4ME"></re-captcha>
+                                    </div>
+                                </div>
+                            </li>
+
+                    </ul>
+                    <!-- <div class="input-group has-feedback">
+                    </div> -->
+                    <div *ngIf="userDetailsPage">
+                        <!-- <div class="col-md-4"></div> -->
+                        <!--<div *ngIf="reservationMessage === null">-->
+                        <div class="col-md-6"><button class="clr_btn" type="reset" (click)="onClear()">Clear</button></div>
+                        <div class="col-md-6"><button class="nxt_btn" [disabled]="reservationform.invalid" (click)="onTerms()">Submit</button></div>
+                        <!--</div>-->
+                    </div>
+                    <!--</div>-->
+                </form>
+                <div class="trm_cnfrm_pop">
+                    <p-dialog header="Terms and Conditions" [(visible)]="terms" [closable]="true" [resizable]="false"
+                        [draggable]="false" [minWidth]="400" [modal]="true" [minHeight]="400">
+                        <div>
+                            <h6><object data="../../assets/slotsAssets/terms_file.txt"></object></h6>
+                        </div>
+                        <br>
+                        <p-footer>
+                            <input type="checkbox" name="termsCheck" value="termsCheck" [(ngModel)]="termsCheck"
+                                (click)="onTermsCheck()">
+                            <!--<input type="checkbox" [(ngModel)]="termsCheck"  name= "termsCheck" value="termsCheck" (click)="onTermsCheck()">-->
+                            I agree to the terms and conditions.
+                            <br>
+                            <br>
+                            <div>
+                                <button class="cnfrm_btn" type="submit" [disabled]="termsCheck === false || termsCheck === null || termsCheck === undefined"
+                                    (click)="onFormSubmit()">Confirm</button>
+                            </div>
+                        </p-footer>
+                    </p-dialog>
+                </div>
+            </div>
+        </div>
+        <!-- fields home left form end -->
+        <!-- fields home right start -->
+        <div class="gr_form_rgt fild_hm_rgt">
+
+            <div class="col-md-8 hm_title_blk">
+            <div class="hm_rgt_title">
+                <h3>{{cityName}} - Fields Manager</h3>
+                <p>{{ address }}<br></p>
+                    <!-- {{ cityName }}, {{ state }}</p> -->
+                <button type="button" class="hm_log_btn" (click)="loginAsAdmin()">Login as Admin </button>
+            </div>
+            </div>
+
+            <div class='col-md-4' *ngIf='weatherReport'>
+            <div class='weather_blk'>
+            <h3>{{weatherReport.city}}, {{weatherReport.country}}</h3>
+            <p>{{weatherReport.updated}}</p>
+            <div class="temp_blk">
+            <h4>{{weatherReport.alt.temp}}&deg;{{weatherReport.alt.unit}}</h4>
+            <img src="{{weatherReport.image}}" title="" class="temp_img" />
+            <h6>{{weatherReport.currently}}</h6>
+            </div>
+            <div class="clr"></div>
+            <ul>
+            <li><span>Wind:</span> <span>{{weatherReport.wind.speed}}{{weatherReport.units.speed}}, {{weatherReport.wind.direction}}</span></li>
+            <li><span>Humidity:</span> <span>{{weatherReport.humidity}}%</span></li>
+            <li><span>Pressure:</span> <span>{{weatherReport.pressure}}hPa</span></li>
+            </ul>
+            </div>
+            </div>
+
+            <div class="hm_copyright_txt">
+                <p>© 2018 Copyright: Powered by <a href="https://www.bizcloudexperts.com/">BizCloud Experts</a></p>
+            </div>
+        
+        </div>
+        <!-- fields home right end -->
+
+
+
+    </div>
+   
+
+</div>
+<!-- fields home end -->
+<!--<router-outlet></router-outlet>-->
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>

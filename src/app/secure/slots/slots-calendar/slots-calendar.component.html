@@ -1,0 +1,1027 @@
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<!-- <p>Display event : {{displayEvent | json}}</p> -->
+<div *ngIf="calendarOptions && !unauthorized && !error">
+    <ng-fullcalendar #ucCalendar [options]="calendarOptions" [(eventsModel)]="events"
+                     (eventClick)="eventClick($event.detail)"
+                     (eventDrop)="updateEvent($event.detail)"
+                     (eventResize)="updateEvent($event.detail)"
+                     (clickButton)="clickButton($event.detail)">
+
+    </ng-fullcalendar>
+</div>
+
+<button type="button" id="available-slot" [hidden]="true" data-toggle="modal" data-target="#availableSlot"></button>
+
+<div class="modal fade avilbl_slt_modal bs-example-modal-sm" id="availableSlot" tabindex="-1" role="dialog" aria-labelledby="availableSlot">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="availableSlotLabel">Available Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="avilbl_slt_dtls">
+                    <dl class="dl-horizontal">
+                        <dt>Ground :</dt>
+                        <dd>{{selectedGroundName}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Date :</dt>
+                        <dd>{{this.selectedSlot['date']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>From Time :</dt>
+                        <dd>{{this.selectedSlot['startTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>To Time :</dt>
+                        <dd>{{this.selectedSlot['endTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Sport :</dt>
+                        <dd>{{this.selectedSlot['sport']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Representative :</dt>
+                        <dd>{{this.selectedSlot['repName']}}</dd>
+                    </dl>
+                    <span>Slot Open Window</span>
+                    <dl class="dl-horizontal">
+                            <br>
+                        <dt>Open Date :</dt>
+                        <dd>{{this.selectedSlot['openDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Close Date :</dt>
+                        <dd>{{this.selectedSlot['closeDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-toggle="modal" data-target="#cancelGroup" (click)="calcelSlot()">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-default delete_btn" (click)="deleteSlotOptions(this.selectedSlot)">
+                    <img src="../../../../assets/slotsAssets/img/delete_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-primary edit_btn" (click)="editSlot(this.selectedSlot)">
+                    <img src="../../../../assets/slotsAssets/img/edit_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="reserved-slot" [hidden]="true" data-toggle="modal" data-target="#reservedSlot"></button>
+
+<div class="modal fade rsrvd_slt_modal bs-example-modal-sm" id="reservedSlot" tabindex="-1" role="dialog" aria-labelledby="reservedSlot">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button4" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="reservedSlotLabel">Reserved</h4>
+            </div>
+            <div class="modal-body">
+                <div class="avilbl_slt_dtls">
+                    <dl class="dl-horizontal">
+                        <dt>Holder :</dt>
+                        <dd>{{selectedSlotReservationDetails['name']}}<br/>
+                            {{selectedSlotReservationDetails['email']}}<br/>
+                            {{selectedSlotReservationDetails['phoneNumber']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Date :</dt>
+                        <dd>{{this.selectedSlot['date']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>From Time :</dt>
+                        <dd>{{this.selectedSlot['startTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>To Time :</dt>
+                        <dd>{{this.selectedSlot['endTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Sport :</dt>
+                        <dd>{{this.selectedSlot['sport']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Representative :</dt>
+                        <dd>{{this.selectedSlot['repName']}}</dd>
+                    </dl>
+
+                    <span>Slot Open Window</span>
+                    <dl class="dl-horizontal">
+                            <br>
+                        <dt>Open Date :</dt>
+                        <dd>{{this.selectedSlot['openDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Close Date :</dt>
+                        <dd>{{this.selectedSlot['closeDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-toggle="modal" data-target="#cancelGroup" (click)="calcelSlot()">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-default reset_btn" data-toggle="modal" data-target="#resetGroup">
+                    <img src="../../../../assets/slotsAssets/img/reset_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-default delete_btn" (click)="deleteSlotOptions(this.selectedSlot)">
+                    <img src="../../../../assets/slotsAssets/img/delete_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-primary edit_btn" (click)="editSlot(this.selectedSlot)" >
+                <!-- <button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editSlot"> -->
+                    <img src="../../../../assets/slotsAssets/img/edit_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<button type="button" id="reservation-slot" [hidden]="true" data-toggle="modal" data-target="#reservationSlot" (click)="getReservations(this.selectedSlot)"></button>-->
+<button type="button" id="reservation-slot" [hidden]="true" data-toggle="modal" data-target="#reservationSlot"></button>
+
+<div class="modal fade rsrvton_slt_modal bs-example-modal-sm" id="reservationSlot" tabindex="-1" role="dialog" aria-labelledby="reservationSlot">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button3" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="reservationSlotLabel">Reservation Requests</h4>
+            </div>
+            <div class="modal-body">
+                <div class="avilbl_slt_dtls">
+                    <dl class="dl-horizontal">
+                        <dt>Ground : </dt>
+                        <dd>{{selectedGroundName}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Date :</dt>
+                        <dd>{{this.selectedSlot['date']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>From Time :</dt>
+                        <dd>{{this.selectedSlot['startTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>To Time :</dt>
+                        <dd>{{this.selectedSlot['endTime']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Sport :</dt>
+                        <dd>{{this.selectedSlot['sport']}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Representative :</dt>
+                        <dd>{{this.selectedSlot['repName']}}</dd>
+                    </dl>
+
+                    <span>Slot Open Window</span>
+                    <dl class="dl-horizontal">
+                            <br>
+                        <dt>Open Date :</dt>
+                        <dd>{{this.selectedSlot['openDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Close Date :</dt>
+                        <dd>{{this.selectedSlot['closeDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-toggle="modal" data-target="#cancelGroup" (click)="calcelSlot()">
+              <!--  <button type="button" class="btn btn-default cncel_btn" data-toggle="modal" data-target="#cancelGroup" (click)="cancelReservation()"> -->
+
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-default delete_btn" (click)="deleteSlotOptions(this.selectedSlot)">
+                    <img src="../../../../assets/slotsAssets/img/delete_icon.png"/>
+                </button>
+                <button type="button" class="btn btn-default reenter_btn" data-toggle="modal" (click)="gotoAssign()">
+                    <img src="../../../../assets/slotsAssets/img/reenter_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary edit_btn" (click)="editSlot(this.selectedSlot)">
+                    <img src="../../../../assets/slotsAssets/img/edit_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="cancel-slot" [hidden]="true" data-toggle="modal" data-target="#cancelSlot">Cancel Slot</button>
+
+<div class="modal fade cncl_slot_modal bs-example-modal-sm" id="cancelSlot" tabindex="-1" role="dialog" aria-labelledby="cancelSlotLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button1" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="cancelSlotLabel">Cancelled Slot</h4>
+            </div>
+                <div class="modal-body">
+                    <div class="avilbl_slt_dtls">
+                        <dl class="dl-horizontal">
+                            <dt>Ground :</dt>
+                            <dd>{{selectedGroundName}}</dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Date :</dt>
+                            <dd>{{this.selectedSlot['date']}}</dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>From Time :</dt>
+                            <dd>{{this.selectedSlot['startTime']}}</dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>To Time :</dt>
+                            <dd>{{this.selectedSlot['endTime']}}</dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Sport :</dt>
+                            <dd>{{this.selectedSlot['sport']}}</dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Representative :</dt>
+                            <dd>{{this.selectedSlot['repName']}}</dd>
+                        </dl>
+
+                        <!-- <span>Slot Open Window</span>
+                    <dl class="dl-horizontal">
+                            <br>
+                        <dt>Open Date :</dt>
+                        <dd>{{this.selectedSlot['openDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Close Date :</dt>
+                        <dd>{{this.selectedSlot['closeDate'] | date :  "yyyy-MM-dd"}}</dd>
+                    </dl> -->
+
+                    </div>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default delete_btn" (click)="deleteSlotOptions(this.selectedSlot)">
+                            <img src="../../../../assets/slotsAssets/img/delete_icon.png" />
+                        </button>
+                        <!--</div>-->
+
+                        <button type="button" class="btn btn-primary save_btn" data-toggle="modal" data-target="#reactivateGroup" (click)="reactivateGroup()">
+                            <img src="../../../../assets/slotsAssets/img/reuse_icon.png" />
+                        </button>
+                    </div>
+                </div>
+            <!--</div>-->
+        </div>
+    </div>
+<!--</div>-->
+<button type="button" id="edit-slot-conformation" [hidden]="true" data-toggle="modal" data-target="#editSlotConformation"></button>
+<!--<button type="button" id="edit-slot-conformation" [hidden]="true" data-toggle="modal" data-target="#editSlotConformation" (click)="editSlotModel()"></button>-->
+
+<!--edit slot confirmation-->
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="editSlotConformation" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--<img src=" ../../../../assets/slotsAssets/img/close_icon.png" />-->
+                <!--</button>-->
+                <h4 class="modal-title" id="editGroupLabel">Edit Slot</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="asgn_slt_blk">
+                        <div class="asgn_prsn_dtls">
+                            <p>Edit Slot</p>
+                        </div>
+                        <div class="asgn_prsn_slct">
+                            <input type="radio" id=radio1 name="radio" value="this.selectedSlot._scheduleId" (change)="onSelectionSlot()">
+                            <label for=radio1></label>
+                        </div>
+                    </div>
+                    <div class="asgn_slt_blk">
+                        <div class="asgn_prsn_dtls">
+                            <p>Edit Slot Schedule</p>
+                        </div>
+                        <div class="asgn_prsn_slct">
+                            <input type="radio" id=radio2 name="radio" value="this.selectedSlot._scheduleId" (change)="onSelectionSchedule(this.selectedSlot, 'edit')">
+                            <label for=radio2></label>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="closeEdit()">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="confirmEdit(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="edit-change"></div>
+</div>
+<!--edit slot confirmation end-->
+
+<!--edit slot modal start -->
+<button type="button" id="edit-slot" [hidden]="true" data-toggle="modal" data-target="#editSlot"></button>
+
+<div class="modal fade edit_slot_modal" id="editSlot" tabindex="-1" role="dialog" aria-labelledby="editSlotLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button2" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="editSlotLabel">Edit Slot</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="edit_slot_cntnt">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grnd_slct">
+                                    <select disabled class="disabled_slct">
+                                        <option>{{selectedPark}}</option>
+                                        <!-- <option>Ground Name two</option> -->
+                                        <!-- <option>Ground Name three</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grnd_slct has-feedback">
+                                    <!--<p-dropdown [autoWidth]=false [options]="this.allGrounds" [(ngModel)]="selectedSlot['groundId']" (onChange)="getSportsByGround(selectedSlot.groundId)" name="selectedSlot['groundId']" placeholder="Ground Name"></p-dropdown>-->
+                                    <select disabled class="disabled_slct">
+                                        <option>{{selectedGroundName}}</option>
+                                        <!-- <option>Ground Name two</option> -->
+                                        <!-- <option>Ground Name three</option> -->
+                                    </select>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date" value="{{this.selectedSlot['date']}}"> -->
+                                    <!-- <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grnd_slct">
+                                     <p-dropdown [autoWidth]=false [options]="this.allSports" [(ngModel)]="selectedSlot['sportId']" name="selectedSlot['sportId']" placeholder="Select a sport"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+
+                                    <p-calendar [(ngModel)]="selectedSlot['startDate']" placeholder="Date" name="date"></p-calendar>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date" value="{{this.selectedSlot['date']}}"> -->
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <ngb-timepicker [(ngModel)]="ngStartTime" name="startTime" [meridian]="meridian"></ngb-timepicker>
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['startTime']" timeOnly="true" placeholder="From Time" showTime="true" hourFormat="12" name="startTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="From Time" value="{{this.selectedSlot['startTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-1" style="padding-top: 7%"> -->
+                                <!-- <div class="form-group has-feedback"> -->
+                                    <!-- <h4>-</h4> -->
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['startTime']" timeOnly="true" placeholder="From Time" showTime="true" hourFormat="12" name="startTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="From Time" value="{{this.selectedSlot['startTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                            <!--<datetime [datepicker]="false" [(ngModel)]="date3"></datetime>-->
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <ngb-timepicker [(ngModel)]="ngEndTime" name="endTime" [meridian]="meridian"></ngb-timepicker>
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['endTime']" timeOnly="true" placeholder="To Time" showTime="true" hourFormat="12" name="endTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="To Time" value="{{this.selectedSlot['endTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                            <h5 class="first">Slot Open Dates</h5>
+                            <div class="ui-g" style="margin-bottom:5px">
+                                <div class="ui-g-12"><p-radioButton name="group1" value="always" label="Open always (until the day before the slot's date)." [(ngModel)]="selectedSlot['slotCategory']" inputId="opt3" (onClick)="setSlotOpenDates('always')"></p-radioButton></div>
+                                <div class="ui-g-12"><p-radioButton name="group1" value="custom" label="Custom Open Dates" [(ngModel)]="selectedSlot['slotCategory']" inputId="opt2" (onClick)="setSlotOpenDates('custom')"></p-radioButton></div>
+                            </div>
+                                <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                            </div>
+                        </div>
+                        <div *ngIf="showSlotCustomDates" class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <p-calendar placeholder="Booking Open Date" [(ngModel)]="selectedSlot['openDate']" name="openDate"></p-calendar>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <p-calendar placeholder="Booking Close Date" [(ngModel)]="selectedSlot['closeDate']" name="closeDate"></p-calendar>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                            <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                <label class="switch switch_type1" role="switch">
+                                    <input type="checkbox" class="switch__toggle" [(ngModel)]="selectedSlot['autoFIFO']" name="autoFIFO">
+                                    <span class="switch__label"></span>
+                                </label>
+                                <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                            </div>
+                            <span class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Auto FIFO Approval (Automatically approve slot to the first request)</span>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                        <img src="../../../../assets/slotsAssets/img/cancel_icon.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary save_btn" (click)="updateSlot(selectedSlot, ngStartTime, ngEndTime)">
+                        <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--edit slot modal end-->
+
+<!--edit schedule modal start -->
+<button type="button" id="edit-schedule" [hidden]="true" data-toggle="modal" data-target="#editSchedule"></button>
+
+<div class="modal fade edit_slot_modal" id="editSchedule" tabindex="-1" role="dialog" aria-labelledby="editSlotLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close-button9" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelEditSchedule()">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="editSlotLabel">Edit Schedule</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="edit_slot_cntnt">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grnd_slct">
+                                    <select disabled class="disabled_slct">
+                                        <option>{{selectedPark}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grnd_slct">
+                                    <!--<p-dropdown [autoWidth]=false [options]="this.allGrounds" [(ngModel)]="selectedSlot['groundId']" (onChange)="getSportsByGround(selectedSlot['groundId'])" name="selectedSlot['groundId']" placeholder="Ground Name"></p-dropdown>-->
+                                    <select disabled class="disabled_slct">
+                                        <option>{{selectedGroundName}}</option>
+                                        <!-- <option>Ground Name two</option> -->
+                                        <!-- <option>Ground Name three</option> -->
+                                    </select>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date" value="{{this.selectedSlot['date']}}"> -->
+                                    <!-- <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group grnd_slct">
+                                    <p-dropdown [autoWidth]=false [options]="this.allSports" [(ngModel)]="selectedSlot['sportId']" name="selectedSlot['sportId']" placeholder="All Sports"></p-dropdown>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <p-calendar placeholder="Start Date" [(ngModel)]="selectedSlot['startDate']" name="startDate"></p-calendar>
+                                    <!-- <input type="text" class="form-control" placeholder="Start Date"> -->
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <p-calendar placeholder="End Date" [(ngModel)]="selectedSlot['endDate']" name="endDate"></p-calendar>
+                                    <!-- <input type="text" class="form-control" placeholder="End Date"> -->
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback input_icon" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-6">-->
+                                <!--<div class="form-group has-feedback">-->
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['startTime']" timeOnly="true" showTime="true" hourFormat="12" placeholder="From Time"  name="startTime"></p-calendar>-->
+                                    <!--&lt;!&ndash; <input type="text" class="form-control" placeholder="From Time" value="{{this.selectedSlot['startTime']}}"> &ndash;&gt;-->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-md-6">-->
+                                <!--<div class="form-group has-feedback">-->
+
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['endTime']" timeOnly="true" showTime="true" hourFormat="12" placeholder="To Time" name="endTime"></p-calendar>-->
+
+                                    <!--&lt;!&ndash; <input type="text" class="form-control" placeholder="To Time" value="{{this.selectedSlot['endTime']}}"> &ndash;&gt;-->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <ngb-timepicker [(ngModel)]="ngStartTime" name="startTime" [meridian]="meridian"></ngb-timepicker>
+
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['startTime']" timeOnly="true" placeholder="From Time" showTime="true" hourFormat="12" name="startTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="From Time" value="{{this.selectedSlot['startTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-1" style="padding-top: 7%"> -->
+                                <!-- <div class="form-group has-feedback"> -->
+                                    <!-- <h4 style="padding-top: 7%">-</h4> -->
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['startTime']" timeOnly="true" placeholder="From Time" showTime="true" hourFormat="12" name="startTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="From Time" value="{{this.selectedSlot['startTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                            <!--<datetime [datepicker]="false" [(ngModel)]="date3"></datetime>-->
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <ngb-timepicker [(ngModel)]="ngEndTime" name="endTime" [meridian]="meridian"></ngb-timepicker>
+                                    <!--<p-calendar [(ngModel)]="selectedSlot['endTime']" timeOnly="true" placeholder="To Time" showTime="true" hourFormat="12" name="endTime"></p-calendar>-->
+                                    <!-- <input type="text" class="form-control" placeholder="To Time" value="{{this.selectedSlot['endTime']}}"> -->
+                                    <!--<span class="glyphicon glyphicon-time form-control-feedback input_icon" aria-hidden="true"></span>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="week_check">
+                                <ul class="week_chck_box">
+                                    <li *ngFor="let day of scheduleDays; let i of index">
+                                        <div class="check_div">
+                                            <input type="checkbox" (change)="onDaySelection(day)" [checked]="repeatDays[day]" [value]="day" id="{{day}}" name="repeatDays">
+                                            <label for="{{day}}"></label>
+                                        </div>
+                                        <span>{{day}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                            <h5 class="first">Slot Open Dates</h5>
+                            <div class="ui-g" style="margin-bottom:5px">
+                                <div class="ui-g-12"><p-radioButton name="group1" value="default" label="Open this slot only the week before the slot." [(ngModel)]="selectedSlot['scheduleCategory']" inputId="opt1" (onClick)="setScheduleOpenDates('defalut')"></p-radioButton></div>
+                                <div class="ui-g-12"><p-radioButton name="group1" value="always" label="Open always (until the day before the slot's date)." [(ngModel)]="selectedSlot['scheduleCategory']" inputId="opt2" (onClick)="setScheduleOpenDates('always')"></p-radioButton></div>
+                                <div class="ui-g-12"><p-radioButton name="group1" value="custom" label="Custom Open Dates" [(ngModel)]="selectedSlot['scheduleCategory']" inputId="opt3" (onClick)="setScheduleOpenDates('custom')"></p-radioButton></div>
+                            </div>
+                                <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                            </div>
+                        </div>
+                        <div *ngIf="showScheduleCustomDates" class="col-md-12">
+                            <span class="col-md-12">Open Slot before  <input style="width:25%" type="text" placeholder="No of days" [(ngModel)]="selectedSlot['openBefore']" name="openDate"> days</span>
+                            <span class="col-md-12">Close Slot before  <input style="width:25%" type="text" placeholder="No of days" [(ngModel)]="selectedSlot['closeBefore']" name="closeDate"> days</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                            <div class="col-md-2" style="padding-right: 0px; width:10%">
+                                <label class="switch switch_type1" role="switch">
+                                    <input type="checkbox" class="switch__toggle" [(ngModel)]="selectedSlot['autoFIFO']" name="autoFIFO">
+                                    <span class="switch__label"></span>
+                                </label>
+                                <!-- <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div> -->
+                            </div>
+                            <p class="col-md-10" style="padding: 0px; font-weight: 350; width: 89.333333%">Auto FIFO Approval (Automatically approve all scheduled slots to the first request)</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="cancelEditSchedule()">
+                        <img src="../../../../assets/slotsAssets/img/cancel_icon.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary save_btn" (click)="updateSchedule(selectedSlot, ngStartTime, ngEndTime)">
+                        <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--edit schedule modal end-->
+
+<!--delete slot confirmation-->
+<button type="button" id="delete-slot-conformation" [hidden]="true" data-toggle="modal" data-target="#DeleteSlotConformation"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="DeleteSlotConformation" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--<img src=" ../../../../assets/slotsAssets/img/close_icon.png" />-->
+                <!--</button>-->
+                <h4 class="modal-title" id="deleteGroupLabel">Delete Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="asgn_slt_dtls">
+                    <ul>
+                        <li>This slot is associated with a schedule,</li>
+                    </ul>
+                </div>
+                    <div class="asgn_slt_blk">
+                        <div class="asgn_prsn_dtls">
+                            <p>Delete Slot</p>
+                        </div>
+                        <div class="asgn_prsn_slct">
+                            <input type="radio" id=radio3 name="radio" checked="idx === 0" value="this.selectedSlot._scheduleId" (change)="onSelectionSlot()">
+                            <label for=radio3></label>
+                        </div>
+                    </div>
+                    <div class="asgn_slt_blk">
+                        <div class="asgn_prsn_dtls">
+                            <p>Delete Slot Schedule</p>
+                        </div>
+                        <div class="asgn_prsn_slct">
+                            <input type="radio" id=radio4 name="radio" checked="idx === 0" value="this.selectedSlot._scheduleId" (change)="onSelectionSchedule(this.selectedSlot, 'delete')">
+                            <label for=radio4></label>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="closeEdit()">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="confirmDelete(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete slot confirmation end-->
+
+<!--delete slots start-->
+<button type="button" id="delete-slot" [hidden]="true" data-toggle="modal" data-target="#deleteGroup"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="deleteGroup" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="deleteGroupLabel">Delete Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to delete this slot ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="deleteSlot(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete slot end-->
+
+<!--delete schedule start-->
+<button type="button" id="delete-schedule" [hidden]="true" data-toggle="modal" data-target="#deleteSlotSchedule"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="deleteSlotSchedule" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="deleteGroupLabel">Delete Schedule</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to delete this schedule ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="deleteSchedule(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete schedule end-->
+
+<!--Cancel slot confirmation-->
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="cancelGroup" tabindex="-1" role="dialog" aria-labelledby="cancelGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="cancelGroupLabel">Cancel Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to cancel this slot ?</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <br>
+                            <p>Reason for cancellation:</p>
+                            <input type="text" class="form-control"
+                                [(ngModel)]="this.cancellationReason">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="cancelSlot(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Cancel slot confirmation end-->
+
+<!--Re-activate slot confirmation-->
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="reactivateGroup" tabindex="-1" role="dialog" aria-labelledby="reactivateGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="reactivateGroupLabel">Re-active Slot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to re-activate this slot ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="reactivateSlot(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Re-activate slot confirmation end-->
+
+<!--Reset reservations confirmation-->
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="resetGroup" tabindex="-1" role="dialog" aria-labelledby="resetGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="resetGroupLabel">Reset Reservations</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to reset the reservations for this slot ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="resetReservations(this.selectedSlot)" >
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Reset reservations confirmation end-->
+
+
+<!-- Assign Slot modal start -->
+<button type="button" id="assign-slots" [hidden]="true" data-toggle="modal" data-target="#assignPop"></button>
+<div class="modal fade asgn_slt_modal bs-example-modal-sm" id="assignPop" tabindex="-1" role="dialog" aria-labelledby="assignPopLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="assign-slot-popup" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="assignPopLabel">Assign Slot</h4>
+            </div>
+            <form>
+            <div class="modal-body">
+                <div class="asgn_slt_cntnt">
+                    <div class="asgn_slt_dtls">
+                        <ul>
+                            <li>{{this.selectedSlot['date']}}</li>
+                            <li>{{this.selectedSlot['startTime']}}</li>
+                            <li>to</li>
+                            <li>{{this.selectedSlot['endTime']}}</li>
+                        </ul>
+                    </div>
+                    <div class="asgn_slts">
+                        <div class="asgn_slt_blk" *ngFor="let reservation of allReservations">
+                            <div class="name_sign">{{reservation.initials}}</div>
+                            <div class="asgn_prsn_dtls">
+                                <p>{{reservation.First_Name}} {{reservation.Last_Name}}</p>
+                                <p>{{reservation.Phone_Number}}</p>
+                                <p>{{reservation.Email}}</p>
+                                <h6>Created at: {{reservation.Created_At}}</h6>
+                            </div>
+                            <div class="asgn_prsn_slct">
+                                <input type="radio" id={{reservation.Reservation_Id}} name="radio" value="false" (click)="customButton()" (change)="onAssignSelect(reservation)">
+                                <label for={{reservation.Reservation_Id}}></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default asgn_btns fifo_btn" data-toggle="modal" (click)="assignFifo()">Fifo</button>
+                <button type="button" class="btn btn-default asgn_btns random_btn" data-dismiss="modal" (click)="assignRandom()">Random</button>
+                <button type="button" [disabled]="!customApprove" class="btn btn-default asgn_btns confirm_btn" data-dismiss="modal" (click)="assignSelected()">Custom</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Assign Slot modal end -->
+
+<!--FIFO confirmation-->
+<button type="button" id="assign-fifo" [hidden]="true" data-toggle="modal" data-target="#FIFOGroup"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="FIFOGroup" tabindex="-1" role="dialog" aria-labelledby="FIFOGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="FIFOGroupLabel">Reservations Approval</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to assign this slot using FIFO ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="selectedFIFOReservation(this.allReservations)">
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--FIFO confirmation end-->
+
+<!--Random confirmation-->
+<button type="button" id="assign-random" [hidden]="true" data-toggle="modal" data-target="#RandomGroup"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="RandomGroup" tabindex="-1" role="dialog" aria-labelledby="FIFOGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="FIFOGroupLabel">Reservations Approval</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to assign this slot using Random ?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="selectedRandomReservation(this.allReservations)">
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Random confirmation end-->
+
+<!--Confirm popup confirmation-->
+<button type="button" id="assign-confirm" [hidden]="true" data-toggle="modal" data-target="#ConfirmGroup"></button>
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="ConfirmGroup" tabindex="-1" role="dialog" aria-labelledby="FIFOGroupLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src=" ../../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="FIFOGroupLabel">Reservations Approval</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>Are you sure you want to assign this slot to the selected person?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn" data-dismiss="modal" (click)="reservationSelected()">
+                    <img src="../../../../assets/slotsAssets/img/save_icon.png"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Confirm popup confirmation end-->
+<!--<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="loder" [visible] = "loadingBar" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel">-->
+    <!--<div class="modal-dialog modal-sm" role="document">-->
+        <!--<div class="modal-content">-->
+                <!--<div id="loadingModal" style="padding-top:15%; overflow-y:visible; ">-->
+                <!--<h3 style="text-align: center;">Loading...</h3>-->
+                <!--<div class="progress progress-striped active"-->
+                     <!--style="margin-bottom:0;-->
+               <!--width: 45%;">-->
+                    <!--<div class="progress-bar" style="width: 100%"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active"
+             style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>

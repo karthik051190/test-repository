@@ -1,0 +1,369 @@
+<!-- content end-->
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<div *ngIf="!error && !unauthorized" class="tot_cntnt">
+    <p-confirmDialog></p-confirmDialog>
+    <div class="container">
+        <!-- grounds section start -->
+        <div class="grunds_sctn">
+            <!-- grounds list header start -->
+            <div class="grunds_hdr row">
+                <div class="col-md-3 col-xs-4">
+                    <h2>Ground</h2>
+                </div>
+                <div class="col-md-7 col-xs-5">
+                    <h2>Sports</h2>
+                </div>
+            </div>
+            <!-- grounds list header end -->
+            <!-- grounds list start -->
+            <div class="grunds_lst row" *ngFor="let Ground of this.grounds1">
+                <!-- grounds list name start -->
+                <div class="col-md-3 col-xs-3">
+                    <h3>{{Ground.groundName}}</h3>
+                </div>
+                <!-- grounds list name end -->
+                <!-- grounds list sports start -->
+                <div class="col-md-7 col-xs-6">
+
+                    <!-- grounds sports pills start -->
+                    <div class="sprts_pills" *ngIf="Ground.sportsExist">
+                        <ul>
+                            <li *ngFor="let Sport of Ground.sport"> {{Sport.sportName}} <span class="cls_pill" (click)="onClickDeleteSport(Sport)"><img
+                                        src="../../../assets/slotsAssets/img/close_icon.png" /></span></li>
+                        </ul>
+                        <div *ngIf="Ground.moreSportsExist">
+                            <a [popover]="myPopover" data-container="body" data-placement="right" type="button"
+                                data-html="true" id="more" class="more_sprts glyphicon glyphicon-option-horizontal"></a>
+                        </div>
+                    </div>
+                    <!-- grounds sports pills end -->
+                    <!-- grounds more sports pills start -->
+                    <!-- grounds more sports pills end -->
+                    <!-- grounds more sports pills end -->
+
+                    <popover-content #myPopover [closeOnClickOutside]="true" title="" placement="right" class="popover_close">
+                        <div id="popover-content-login">
+                            <div class="sprts_pills pop_over_pills">
+                                <ul>
+                                    <li *ngFor="let Sport of Ground.moreSports"> {{Sport.sportName}} <span class="cls_pill"
+                                            (click)="onClickDeleteSport(Sport)"><img src="../../../assets/slotsAssets/img/close_icon.png" /></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </popover-content>
+                    <!-- grounds more sports popover pills start -->
+
+                    <!-- grounds more sports popover pills end -->
+                </div>
+                <!-- grounds list sports end -->
+                <div class="col-md-2 col-xs-3">
+                    <div class="lst_actns">
+                        <!-- delete icon start -->
+                        <button class="lst_dlt_icn" (click)="onClickDeleteGround(Ground)"><img src="../../../assets/slotsAssets/img/delete_icon.png" /></button>
+                        <!-- delete icon end -->
+                        <!-- edit icon start -->
+                        <a href="#" class="lst_edit_icn" data-toggle="modal" data-target="#editGround" (click)="onClickEditGround(Ground)"><img
+                                src="../../../assets/slotsAssets/img/edit_icon.png" /></a>
+                        <!-- edit icon end -->
+                    </div>
+                </div>
+            </div>
+            <!-- grounds list end-->
+        </div>
+        <!-- grounds section end -->
+        <!-- add ground btn start -->
+        <button class="add_grnd_btn" type="button" (click)="onClickAddGround()"><img src="../../../assets/slotsAssets/img/plus_icon.png" /></button>
+        <!-- add ground btn end -->
+    </div>
+</div>
+<!-- content end-->
+<!-- Add Ground modal start -->
+<p-dialog [minWidth]="300" header="Add Ground" [visible]="addGroundDialog" [closable]="false" [draggable]="false"
+    [resizable]="false" class="add_ground_modal">
+    <form [formGroup]="groundform">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grnd_slct">
+                    <select disabled class="disabled_slct">
+                        <option>{{selectedPark}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="groundName" placeholder="Ground Name"
+                        [(ngModel)]="groundData.groundName">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="sprts_chck">
+                <ul class="sprts_chck_box" *ngIf="isNotNewOther">
+                    <li *ngFor="let sport of allSports">
+                        <div class="check_div">
+                            <input type="checkbox" id="{{sport.sportName}}" name="check" value="false" (change)="change($event, sport)">
+                            <label for="{{sport.sportName}}"></label>
+                        </div>
+                        <span>{{sport.sportName}}</span>
+                    </li>
+                </ul>
+                <ul class="sprts_chck_box">
+                    <li>
+                        <div class="check_div">
+                            <input type="checkbox" id="#others" name="check" value="false" (change)="addSport($event)">
+                            <label for="#others"></label>
+                        </div>
+                        <span>Other Sport</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-12 other_sport" *ngIf="isAddSport">
+                <div class="form-group has-feedback sprts_input">
+                    <input type="text" class="form-control" formControlName="sportName" placeholder="Add New Sport"
+                        [(ngModel)]="groundData.sportName">
+                </div>
+                <!-- <button type="button" (click)="createSport(groundData)">save</button> -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default cncel_btn" (click)="addGroundCancel()">
+                <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+            </button>
+            <button type="button" class="btn btn-primary save_btn" (click)="addGround()">
+                <img src="../../../assets/slotsAssets/img/save_icon.png" />
+            </button>
+        </div>
+    </form>
+</p-dialog>
+<!-- Add Ground modal end -->
+<!-- Edit Ground modal start -->
+<div class="modal fade add_slot_modal bs-example-modal-sm" id="editGround" tabindex="-1" role="dialog" aria-labelledby="editGroundLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" *ngIf="showEditGround">
+            <div class="modal-header">
+                <button type="button" id="editGroundClose" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="editGroundLabel">Edit Ground</h4>
+            </div>
+            <div class="modal-body">
+                <div class="add_slot_tabs add_grund">
+                    <!-- Tab panes -->
+                    <div class="add_slot_cntnt add_grund_cntnt">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="grnd_slct">
+                                        <select disabled class="disabled_slct">
+                                            <option>{{selectedPark}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group has-feedback">
+                                        <input type="text" class="form-control" placeholder="Ground Name" [(ngModel)]="edit_groundName"
+                                            name="groundName" (input)="groundChangeKey(edit_groundName)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!--   <div class="col-md-12">
+                                        <div class="form-group has-feedback sprts_input">
+                                            <input type="text" class="form-control" placeholder="Add New Sport">
+                                        </div>
+                                    </div> -->
+                                <div class="sprts_chck">
+                                    <ul class="sprts_chck_box edt_sprt_lst" *ngIf="viewSport">
+                                        <li *ngFor="let sport of edit_sportName">
+                                            <span>{{sport.sportName}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br />
+                            <div class=row>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addNewSport"
+                                        (click)="addNewSport(edit_sportName)">Add New Sport</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success" (click)="veiwSport()" *ngIf="showSports">View
+                                        Sports</button>
+                                    <button type="button" class="btn btn-success" (click)="hideSport()" *ngIf="hideSports">Hide
+                                        Sports</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="cancelGround()">
+                    <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn edit_ground1" (click)="updateGround(edit_groundName)">
+                    <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Ground modal end -->
+
+
+<!-- Add new sport modal start -->
+<div class="modal fade add_slot_modal bs-example-modal-sm" id="addNewSport" tabindex="-1" role="dialog" aria-labelledby="editGroundLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="addNewSportClose" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="editGroundLabel">Add New Sport</h4>
+            </div>
+            <form [formGroup]="groundform">
+                <div class="modal-body">
+                    <div>
+                        <ul class="sprts_chck_box" *ngIf="isNotOthers">
+                            <li *ngFor="let sport of availableSports">
+                                <div class="check_div">
+                                    <input type="checkbox" id="#{{sport.sportName}}" name="check" value="false"
+                                        (change)="change($event, sport)">
+                                    <label for="#{{sport.sportName}}"></label>
+                                </div>
+                                <span>{{sport.sportName}}</span>
+                            </li>
+                        </ul>
+                        <ul class="sprts_chck_box">
+                            <li>
+                                <div class="check_div">
+                                    <input type="checkbox" id="others" name="check" value="false" (change)="Sport($event)">
+                                    <label for="others"></label>
+                                </div>
+                                <span>Other Sport</span>
+                            </li>
+                        </ul>
+                        <!-- <button type="button" (click)="Sport()">Others</button> -->
+                    </div>
+                    <div class="col-md-12 other_sport" *ngIf="isNewSport">
+                        <div class="form-group has-feedback sprts_input">
+                            <input type="text" class="form-control" formControlName="sportName" (input)="otherSportKey(createNewSport.sportName)"
+                                placeholder="Add New Sport" [(ngModel)]="createNewSport.sportName">
+                        </div>
+                        <!-- <button type="button" (click)="saveSport(createNewSport)">save</button> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal" (click)="cancelSport()">
+                        <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                    </button>
+                    <button type="button" class="btn btn-primary save_btn edit_ground2" (click)="updateSport(createNewSport)"
+                        disabled>
+                        <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add new sport modal end -->
+
+
+
+<!-- Delete Ground modal start -->
+<div class="modal fade dlt_grund_modal bs-example-modal-sm" id="deleteGroup" tabindex="-1" role="dialog"
+    aria-labelledby="deleteGroundLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="deleteGroundLabel">Delete Ground</h4>
+            </div>
+            <div class="modal-body">
+                <div class="dlt_grund_cntnt">
+                    <p>There are 6 active reservations in this ground</p>
+                    <div class="dlt_grund_slct">
+                        <input id="radio1" name="radio" value="false" type="radio" checked="checked">
+                        <label for="radio1"></label>
+                        <p>Delete reservations and ground.</p>
+                    </div>
+                    <div class="dlt_grund_slct">
+                        <input id="radio1" name="radio" value="false" type="radio">
+                        <label for="radio1"></label>
+                        <p>Only delete ground (Doesn’t impact
+                            current reservations, no future requests will be allowed)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn">
+                    <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Ground modal end -->
+
+<!-- Confirm slot modal start -->
+<div class="modal fade cnfrm_pop_modal bs-example-modal-sm" id="confirmPop" tabindex="-1" role="dialog" aria-labelledby="confirmPop">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../../assets/slotsAssets/img/close_icon.png" />
+                </button>
+                <h4 class="modal-title" id="confirmPopLabel">Confirm</h4>
+            </div>
+            <div class="modal-body">
+                <div class="avilbl_slt_dtls">
+                    <h6>Are you sure? Send notification to users?</h6>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncel_btn" data-dismiss="modal">
+                    <img src="../../../assets/slotsAssets/img/cancel_icon.png" />
+                </button>
+                <button type="button" class="btn btn-primary save_btn">
+                    <img src="../../../assets/slotsAssets/img/save_icon.png" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Confirm slot modal end -->
+
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>
+<script type="text/javascript">
+    $("[data-toggle=popover]").each(function (i, obj) {
+
+        $(this).popover({
+            html: true,
+            content: function () {
+                var id = $(this).attr('id')
+                return $('#popover-content-' + id).html();
+            }
+        });
+    });
+</script>

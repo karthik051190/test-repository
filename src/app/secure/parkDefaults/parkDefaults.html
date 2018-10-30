@@ -1,0 +1,85 @@
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<div *ngIf="!error && !unauthorized" class="container-fluid fild_hm gr_form">
+  <!-- fields home left form start -->
+
+  <div class="row gr_form_bg">
+    <div class="gr_form_lft">
+      <div class="fild_hm_lft">
+        <a href="#" class="fild_hm_logo"><img src={{somevalue}} (error)="updateUrl($event)"></a>
+        <br>
+        <br>
+        <h3>Park Selection</h3>
+        <div *ngIf="errorMessage!=null" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+        <div>
+          <form>
+            <ul>
+              <li class="row">
+                <div class="col-md-12">
+                  <div class="form-group has-feedback">
+                    <div class="slct_park_drop">
+                      <p-dropdown *ngIf="!noParks" [options]="parkNames" [(ngModel)]="adminParkId" [ngModelOptions]="{standalone: true}"
+                        placeholder="Select a park" (onChange)="onParkSelected()">
+                      </p-dropdown>
+                      <p-dropdown *ngIf="noParks" [options]="parkNames" [(ngModel)]="adminParkId" [ngModelOptions]="{standalone: true}"
+                        placeholder="No Parks Available" (onChange)="onParkSelected()">
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!--<li class="row">-->
+              <!--<div class="col-md-12">-->
+              <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+              <!--<input type="checkbox" name="defaultSet" value="defaultSet" [(ngModel)]="defaultSet"> Set as default-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+              <!--</li>-->
+            </ul>
+            <div class="col-md-12">
+              <div class="set_def_chck">
+                <div class="form-group">
+                  <input type="checkbox" name="defaultSet" value="defaultSet" [(ngModel)]="defaultSet">
+                  <p>Set as default</p>
+                </div>
+              </div>
+            </div>
+            <!--<br>-->
+            <div>
+              <div type="submit" class="col-md-12"><button (click)="updateDefaults()" [disabled]="adminParkId === undefined"
+                  class="nxt_btn">Submit</button></div>
+            </div>
+          </form>
+        </div>
+        <!--<app-forgotPassword></app-forgotPassword>-->
+        <!--<app-forgotPasswordStep2></app-forgotPasswordStep2>-->
+      </div>
+    </div>
+    <!-- fields home left form end -->
+    <!-- fields home right start -->
+        <div class="gr_form_rgt fild_hm_rgt">
+            <div class="hm_rgt_title">
+                <h3>{{ cityName }} - Fields Manager</h3>
+                <p>{{ address }}<br></p>
+      </div>
+      <div class="hm_copyright_txt">
+         <p>© 2018 Copyright: Powered by <a href="https://www.bizcloudexperts.com/">BizCloud Experts</a></p>
+      </div>
+    </div>
+    <!-- fields home right end -->
+  </div>
+</div>
+<!-- fields home end -->
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+  <div id="loadingModal" style="overflow-y:visible; ">
+    <h3 style="text-align: center;">Loading...</h3>
+    <br>
+    <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+    </div>
+  </div>
+</p-dialog>
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>

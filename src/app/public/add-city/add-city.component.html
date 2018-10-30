@@ -1,0 +1,475 @@
+<!-- top nav starts -->
+<!-- <div class="row"> -->
+  <div class="filds_hdr pricing_hdr log_hdr">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <!-- logo start -->
+        <div class="navbar-header">
+          <span class="togle_icon" id="menu" (click)="toggleMenu()"><img src="../../../assets/slotsAssets/img/toggle_icon.png"> </span>
+          <a class="signup_logo" href="#"><img src={{somevalue}} (error)="updateUrl($event)"></a>
+        </div>
+        <!-- logo end -->
+        <!-- page title start -->
+        <h3 class="pag_title">Fields Manager - Request New Account</h3>
+        <!-- page title end -->
+      </div>
+  </nav>
+</div>
+<!-- </div> -->
+<!-- top nav ends -->
+<div class="pricing_tp">
+<div class="container">
+<div class="pricing_blk">
+<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true" class="wizard_hdr"></p-steps>
+<div class="tot_cntnt">
+  <!-- <div class="row"> -->
+    <div>
+      <div class="wizard_cntnt">
+        <!-- <div class="col-md-2"></div> -->
+          <div class="col-md-10 col-md-offset-1 background-image">
+            <form [formGroup] = "addCityForm" id="cityForm">
+                <div class="form-group" *ngIf="accountDetailsTab">
+                    <div class="form-group">
+                <h4>Account Details</h4>
+              </div>
+              <div class="form-group">
+                <label for="cityName">Account*</label>
+                <input type="text" class="form-control" formControlName = "cityName" id="cityName" [(ngModel)] = "cityData.cityName" placeholder="Enter name of the account"/>
+              <!--   <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['cityName'].valid&&addCityForm.controls['cityName'].dirty">
+                  Please enter a valid account name!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['cityName'].status== 'INVALID'"> Account must not be empty.</span>
+              </div>
+              <div class="acnt_typ form-group">
+                <label>Account Type*</label>
+                <div class="clr"></div>
+                
+                <!-- <td style="allign : left" > -->
+               <!--  <input type="radio" checked="checked" name="radio"><span> City/Town </span>
+                <input type="radio" name="radio" [disabled]="true"> <span> Park Manager</span>
+                <input type="radio" name="radio" [disabled]="true"> <span> League</span>
+                <input type="radio" name="radio" [disabled]="true"> <span> Team</span>
+                <input type="radio" name="radio" [disabled]="true"> <span> User</span> -->
+              <div class="form-group" style="float: left;margin-right: 15px;" *ngFor="let account of accountType">
+                <input style="margin-right: 5px;position: relative;top: 2px;" formControlName="accountType" type="radio" [value]="account.value" [(ngModel)]="cityData.accountType" />
+                <label>{{account.label}}</label>
+              </div>
+              <div style="clear: both;"></div>
+              <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['accountType'].status== 'INVALID'"> Account Type must be selected!</span>
+              <div style="clear: both;"></div>
+                <!-- </td> -->
+              </div>
+              <div class="form-group">
+                <label for="street">Street*</label>
+                <input type="text" class="form-control" formControlName = "street" id="street" [(ngModel)] = "cityData.street" placeholder="Enter the street address"/>
+              <!--   <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['state'].valid&&addCityForm.controls['state'].dirty">
+                  Please enter a valid state name!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['street'].status== 'INVALID'"> Street must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="city">City*</label>
+                <input type="text" class="form-control" formControlName = "city" id="city" [(ngModel)] = "cityData.city" placeholder="Enter name of the city"/>
+              <!--   <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['state'].valid&&addCityForm.controls['state'].dirty">
+                  Please enter a valid state name!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['city'].status== 'INVALID'"> City must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="state">State*</label>
+                <input type="text" class="form-control" formControlName = "state" id="state" [(ngModel)] = "cityData.state" placeholder="Enter name of the state"/>
+              <!--   <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['state'].valid&&addCityForm.controls['state'].dirty">
+                  Please enter a valid state name!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['state'].status== 'INVALID'"> State must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="zipCode">Zip Code*</label>
+                <input type="text" class="form-control" formControlName = "zipCode" id="zipCode" [(ngModel)] = "cityData.zipCode" placeholder="Enter zip code"/>
+               <!--  <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['zipCode'].valid&&addCityForm.controls['zipCode'].dirty">
+                  Please enter a valid zipCode name!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['zipCode'].status== 'INVALID'"> Zip Code must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="website">Website URL*</label>
+                <input type="text" class="form-control" [(ngModel)] = "cityData.website" formControlName = "website" id="website" placeholder="Enter the website URL"/>
+             <!--    <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['website'].valid&&addCityForm.controls['website'].dirty">
+                  Please enter a valid website url!
+                </div> -->
+                <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['website'].status== 'INVALID'"> Website URL must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="domain">Domain*</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName = "domain" (keydown.space)="$event.preventDefault()" (keypress)="keyPress($event)" id="domain" [(ngModel)] = "cityData.domain" placeholder="Enter preffered domain name">
+                  <span class="input-group-addon" id="domainext">.fieldsmanager.com</span>
+                </div>
+               <!--  <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['domain'].valid&&addCityForm.controls['domain'].dirty">
+                  Please enter a valid domain name!
+                </div> -->
+                 <span class="validationErrors" *ngIf="checkValidation && addCityForm.controls['domain'].status== 'INVALID'"> Domin must not be empty!</span>
+              </div>
+
+              <div class="form-group">
+                  <button type="button" class="btn btn-secondary clr_slot_btn" (click) = "goToMenu(2)">Next</button>
+              </div>
+              </div>
+              <br>
+              <div class="form-group" *ngIf="userDetailsTab">
+              <div class="form-group">
+                <h4>User Details</h4>
+                <small id = "phoneNumberHelp" class="form-text text-muted">Will be used for further communication</small>
+              </div>
+              <!-- User details starts here -->
+              <div class="form-group">
+                <label for="firstName">First Name*</label>
+                <input type="text" class="form-control" formControlName = "firstName" [(ngModel)] = "userData.firstName" id="firstName" placeholder="Enter your first name"/>
+               <!--  <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['firstName'].valid&&addCityForm.controls['firstName'].dirty">
+                  First Name is required!
+                </div> -->
+                 <span class="validationErrors" *ngIf="user_checkValidation && addCityForm.controls['firstName'].status== 'INVALID'"> First Name must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name*</label>
+                <input type="text" class="form-control" formControlName = "lastName" [(ngModel)] = "userData.lastName" id="lastName" placeholder="Enter your second name"/>
+                <!-- <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['lastName'].valid&&addCityForm.controls['lastName'].dirty">
+                  Last Name is required!
+                </div> -->
+                 <span class="validationErrors" *ngIf="user_checkValidation && addCityForm.controls['lastName'].status== 'INVALID'"> Last Name must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number*</label>
+                <input type="number" style="-webkit-appearance: none; margin: 0" class="form-control" formControlName = "phoneNumber" [(ngModel)] = "userData.phoneNumber" id="phoneNumber" placeholder="Enter your phone number"/>
+                <div class="validationErrors" *ngIf="!addCityForm.controls['phoneNumber'].valid&&addCityForm.controls['phoneNumber'].dirty">
+                  Please enter a valid Phone Number!
+                </div>
+                 <span class="validationErrors" *ngIf="user_checkValidation && addCityForm.controls['phoneNumber'].status== 'INVALID'">Phone Number must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="email">E-Mail*</label>
+                <input type="email" class="form-control" formControlName = "email" [(ngModel)] = "userData.email" id="email" placeholder="Enter your email address"/>
+                <div class="validationErrors" *ngIf="!addCityForm.controls['email'].valid&&addCityForm.controls['email'].dirty">
+                  Please enter a valid Email !
+                </div>
+                 <span class="validationErrors" *ngIf="user_checkValidation && addCityForm.controls['email'].status== 'INVALID'"> E-Mail must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <label for="username">Username*</label>
+                <input type="username" class="form-control" formControlName = "username" [(ngModel)] = "userData.username" id="username" placeholder="Enter a username"/>
+               <!--  <div style="color: red; font-size: smaller" *ngIf="!addCityForm.controls['username'].valid&&addCityForm.controls['username'].dirty">
+                  Username is required!
+                </div> -->
+                  <span class="validationErrors" *ngIf="user_checkValidation && addCityForm.controls['username'].status== 'INVALID'"> Username must not be empty!</span>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-primary clr_slot_btn" style="margin-left: 2%" (click) = "goToMenu(3)">Next</button>
+                <button type="button" class="btn btn-secondary clr_slot_btn" (click) = "goToMenu(1)">Back</button>
+              </div>
+              </div>
+
+
+              <div class="form-group" *ngIf="subscriptionTab">
+
+                <p-tabView (onChange)="handleChange($event)" activeIndex="{{tabIndex}}">
+                <p-tabPanel header="Subscription" id="sub">
+                 
+                 <input formControlName="Type" type="hidden" [value]="1" [(ngModel)]="sub_type" />
+                  
+              	<div style="width: 100%;text-align: center;">
+                      	<span class="validationErrors" *ngIf="plan_checkValidation && addCityForm.controls['planType'].status== 'INVALID'"> Plan must be selected!</span>
+                </div>
+                <div class="clr">&nbsp;</div>
+
+                  <table>
+                      <thead>
+
+                    
+                      <tr>
+                        <th style="border:0; background:none"></th>
+
+          						<th *ngFor="let plan of selectble_plans">
+          						<input style="margin-right: 5px;position: relative;top: 2px;" formControlName="planType" type="radio" [value]="plan.value" [(ngModel)]="policyData.policyName" />
+          						<label>{{plan.label}}</label>
+          						</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Monthly price</td>
+                        <td><span class="txt-top"></span><button *ngIf="basicDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="basicDetails[0].price != 'contact'" class="txt-l">{{basicDetails[0].price}}
+                       </span>
+                       <span class="trial_txt">(Free trial 6 months)</span>
+                     </td>
+                        <td class="default"><span class="txt-top"></span><button *ngIf="advancedDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="advancedDetails[0].price != 'contact'" class="txt-l">{{advancedDetails[0].price}}
+                        </span>
+                        <span class="trial_txt">(Free trial 6 months)</span>
+                      </td>
+                        <td class="default"><span class="txt-top"></span><button *ngIf="premiumDetails[0].price == 'contact'"><a href="mailto:cx_fieldsmanager@bizcloudexperts.com?subject=New Organization Request - Custom Pricing">Contact Sales</a></button><span *ngIf="premiumDetails[0].price != 'contact'" class="txt-l">{{premiumDetails[0].price}}
+                        </span>
+                        <span class="trial_txt trial_top_spc">(Free trial 6 months)</span>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="sep">Limits</td>
+                      </tr>
+                      <tr>
+                        <td>Number of parks</td>
+                        <td><span class="tick">{{basicDetails[0].noofParks}}</span></td>
+                        <td><span class="tick">{{advancedDetails[0].noofParks}}</span></td>
+                        <td><span class="tick">{{premiumDetails[0].noofParks}}</span></td>
+                        </tr>
+                        <tr>
+                        <td>Grounds per park</td>
+                        <td><span class="tick">{{basicDetails[0].groundsperParks}}</span></td>
+                        <td><span class="tick">{{advancedDetails[0].groundsperParks}}</span></td>
+                        <td><span class="tick">{{premiumDetails[0].groundsperParks}}</span></td>
+                        </tr>
+                        <tr>
+                        <td>Sports per ground</td>
+                        <td><span class="tick">{{basicDetails[0].sportsperGround}}</span></td>
+                        <td><span class="tick">{{advancedDetails[0].sportsperGround}}</span></td>
+                        <td><span class="tick">{{premiumDetails[0].sportsperGround}}</span></td>
+                        </tr>
+                      <tr>
+                        <td colspan="4" class="sep">Get started easily</td>
+                      </tr>
+                      <tr>
+                        <td>Includes free updates and new features as they become available</td>
+                        <td><span class="tick">&#10004;</span></td>
+                        <td class="default"><span class="tick">&#10004;</span></td>
+                        <td><span class="tick">&#10004;</span></td>
+                      </tr>
+                      <tr>
+                        <td>Accept payments through paypal</td>
+                        <td><span class="tick">&#10004;</span></td>
+                        <td class="default"><span class="tick">&#10004;</span></td>
+                        <td><span class="tick">&#10004;</span></td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="sep">Stay protected and get support</td>
+                      </tr>
+                      <tr>
+                        <td>Automatic data backups</td>
+                        <td><span class="tick">&#10004;</span></td>
+                        <td class="default"><span class="tick">&#10004;</span></td>
+                        <td><span class="tick">&#10004;</span></td>
+                      </tr>
+                      <tr>
+                        <td>24/7 Support</td>
+                        <td><span class="tick"></span></td>
+                        <td class="default"><span class="tick">&#10004;</span></td>
+                        <td><span class="tick">&#10004;</span></td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                </p-tabPanel>
+
+                <p-tabPanel header="Pay as you go" id="pay">
+                  <input formControlName="Type" type="hidden" [value]="2" [(ngModel)]="sub_type" />
+                  <div class="row">
+                    <div class="pay_as_go">
+                      <ul>
+                        <li class="slt_prc_blk">
+                          <h6>Slot based pricing</h6>
+                        </li>
+                        <li>
+                          <i class="tick">&#10004;</i>
+                          <span>Minimum 50&#162; per slot / 10% of slot price</span>
+                        </li>                  
+                        <li>
+                          <i class="tick">&#10004;</i>
+                          <span>Unlimited parks</span>
+                        </li>
+
+                      <li>
+                      <i class="tick">&#10004;</i>
+                      <span>Unlimited grounds</span>
+                      </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                      <span>Unlimited sports</span>
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                      <span>Unlimited administrators</span>
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                        <span>Get started easily</span>
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                        <span>Includes free updates and new features as they become available</span>        
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                        <span>Accept payments through paypal</span>
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                        <span>Stay protected and get support</span>
+                    </li>
+
+                    <li>
+                      <i class="tick">&#10004;</i>
+                      <span>Automatic data backups</span>
+                    </li>
+                    
+                    <li>
+                      <i class="tick">&#10004;</i>
+                        <span>24/7 Support</span>
+                    </li>
+
+                  </ul>
+
+                  </div>
+
+                  </div>
+                </p-tabPanel>
+                </p-tabView>
+                
+                <div class="clr">&nbsp;</div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary clr_slot_btn" style="margin-left: 2%" (click) = "goToMenu(4)">Next</button>
+                    <button type="button" class="btn btn-secondary clr_slot_btn" (click) = "goToMenu(2)">Back</button>
+                </div>
+
+              </div>
+
+
+
+
+              <div class="form-group" *ngIf="confirmationTab">
+
+                  <ul class="info_lst">
+
+                  <li>
+                    <h6 class="col-md-4">CityName :</h6>
+                    <p class="col-md-8">{{cityData.cityName}}</p>
+                  </li>
+
+
+                  <li>
+                  <h6 class="col-md-4">AccountType :</h6>
+                  <p class="col-md-8">{{cityData.accountType}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">Street :</h6>
+                  <p class="col-md-8">{{cityData.street}}</p>
+                  </li>
+
+
+                  <li>
+                  <h6 class="col-md-4">City :</h6>
+                  <p class="col-md-8">{{cityData.city}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">State :</h6>
+                  <p class="col-md-8">{{cityData.state}}</p>
+                  </li>
+
+                  <li>
+                    <h6 class="col-md-4">Zip Code :</h6>
+                    <p class="col-md-8">{{cityData.zipCode}}</p>
+                    </li>
+
+
+                  <li>
+                  <h6 class="col-md-4">Website :</h6>
+                  <p class="col-md-8">{{cityData.website}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">Domain :</h6>
+                  <p class="col-md-8">{{cityData.domain}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">First Name :</h6>
+                  <p class="col-md-8">{{userData.firstName}}</p>
+                  </li>
+
+
+                  <li>
+                  <h6 class="col-md-4">Last Name :</h6>
+                  <p class="col-md-8">{{userData.lastName}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">Phone Number :</h6>
+                  <p class="col-md-8">{{userData.phoneNumber}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">Email :</h6>
+                  <p class="col-md-8">{{userData.email}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">User Name :</h6>
+                  <p class="col-md-8">{{userData.username}}</p>
+                  </li>
+
+                  <li>
+                  <h6 class="col-md-4">Plan Type :</h6>
+                  <p class="col-md-8" *ngIf="sub_type=='subscription'&& policyData.policyName">{{policyData.policyName.Plan_Name}}</p>
+                  <p class="col-md-8" *ngIf="sub_type.Plan_Name=='Pay as you go'">{{sub_type.Plan_Name}}</p>
+                  </li>
+                </ul>
+   
+ 
+
+                  <div class="form-group">
+                      <button type="button" class="btn btn-primary add_slot_btn" style="margin-left: 2%"  (click) = "onSubmit()">Submit</button>
+                      <button type="button" class="btn btn-secondary clr_slot_btn" (click) = "goToMenu(3)">Back</button>
+                    </div>
+              </div>
+              <!-- <div class="msg_cnt_blk">
+                <p-messages [(value)]="msgs"></p-messages>
+              </div> -->
+              <br>
+              <!-- User details ends here -->
+              <!-- </div> -->
+            </form>
+          </div>
+      </div>
+</div>
+</div>
+</div>
+</div>
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+  <div id="loadingModal" style="overflow-y:visible; ">
+    <h3 style="text-align: center;">Loading...</h3>
+    <br>
+    <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- <p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+  <div class="msg_cnt_blk">
+    <p-messages [(value)]="msgs"></p-messages>
+  </div>
+</p-dialog> -->
+
+
+
+<style type="text/css">
+  th:nth-last-child(1){
+    display: none!important;
+  }
+</style>

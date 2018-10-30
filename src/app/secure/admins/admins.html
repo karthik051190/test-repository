@@ -1,0 +1,262 @@
+<app-error *ngIf="error"></app-error>
+<app-unauthorized *ngIf="unauthorized"></app-unauthorized>
+<div *ngIf="!error && !unauthorized" class="tot_cntnt">
+    <div class="container mb_cntinr">
+        <!-- admin section start -->
+        <div class="admin_sctn">
+            <!-- admin list header start -->
+            <div class="admin_hdr row">
+                <div class="col-md-2 col-sm-2">
+                    <h2>Name</h2>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <h2>Username</h2>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <h2>Email</h2>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <h2>Phone</h2>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <h2>Permission</h2>
+                </div>
+
+            </div>
+            <!-- admin list header end -->
+
+            <!-- admin list start -->
+            <div class="admin_lst row" *ngFor="let admin of adminList">
+                <!-- admin name start -->
+                <div class="col-md-2 col-sm-2">
+                    <h3>{{admin.firstName}} {{admin.lastName}}</h3>
+                </div>
+                <!-- admin name end -->
+
+                <!-- admin username start -->
+                <div class="col-md-2 col-sm-2">
+                    <h3>{{admin.userName}}</h3>
+                </div>
+                <!-- admin usernam end -->
+
+                <!-- admin email start -->
+                <div class="col-md-2 col-sm-2">
+                    <h3>{{admin.email}}</h3>
+                </div>
+                <!-- admin email end -->
+
+                <!-- admin phone start -->
+                <div class="col-md-2 col-sm-2">
+                    <h3>{{admin.phone}}</h3>
+                </div>
+                <!-- admin phone end -->
+
+                <!-- admin status start -->
+                <div class="col-md-2 col-sm-2">
+                    <h3>{{admin.permission}}</h3>
+                </div>
+                <!-- admin status end -->
+
+                <div class="col-md-2 col-sm-2">
+                    <div class="lst_actns">
+                        <!-- delete icon start -->
+                        <button type="submit" class="lst_dlt_icn" (click)="confirmDelete(admin)"><img src="../../../assets/slotsAssets/img/delete_icon.png" /></button>
+                        <!-- delete icon end -->
+                        <!-- edit icon start -->
+                        <button type="submit" class="lst_edit_icn" (click)="onClickEditAdmin(admin)"><img src="../../../assets/slotsAssets/img/edit_icon.png" /></button>
+                        <!-- edit icon end -->
+                    </div>
+                </div>
+            </div>
+            <!-- admin list end -->
+        </div>
+        <!-- admin section end -->
+        <!-- add admin btn start -->
+        <button class="add_grnd_btn" (click)="onClickAddAdmin()"><img src="../../../assets/slotsAssets/img/plus_icon.png" /></button>
+        <!-- add admin btn end -->
+    </div>
+    <p-confirmDialog></p-confirmDialog>
+</div>
+<!-- content end -->
+<p-dialog [minWidth]="300" header="Add Admin" id="add-admin" [visible]="addAdminDialog" [draggable]="false" [closable]="false"
+    [resizable]="false" class="add_admin_modal">
+    <form [formGroup]="adminform" class="form-signin">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="adminData.firstName"
+                        placeholder="First Name" required="" autofocus="" />
+                    <!--<span *ngIf=" adminform.controls['firstName'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="lastName" [(ngModel)]="adminData.lastName"
+                        placeholder="Last Name" required="" />
+                    <!--<span *ngIf=" adminform.controls['lastName'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="username" [(ngModel)]="adminData.username"
+                        placeholder="Username" required="" autofocus="" (blur)="checkUsername(adminData.username)" />
+                    <!--<span *ngIf=" adminform.controls['userame'].invalid"> First name is required </span>-->
+                    <span *ngIf="usernameAvailability" style="color:red"> Username is not available! </span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon" id="phone_num">&nbsp;+1&nbsp;</span>
+                    <input pInputText type="text" class="form-control" formControlName="phoneNumber" [(ngModel)]="adminData.phoneNumber"
+                        placeholder="999-999-9999" required="" autofocus="" aria-describedby="phone_num" />
+                    <!--<input class="form-control" pInputText type="number" [(ngModel)]="adminData.phoneNumber"  formControlName="phoneNumber" placeholder="999-999-9999"/>-->
+
+                    <!--<span *ngIf=" adminform.controls['userame'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" formControlName="email" [(ngModel)]="adminData.email"
+                        placeholder="Email" required="" autofocus="" />
+                </div>
+            </div>
+        </div>
+        <!-- <div class="ui-grid-col-6"> -->
+        <!--                 <span class="form-control">@flower-mound.com</span> -->
+        <!--<span *ngIf=" adminform.controls['email'].invalid"> First name is required </span>-->
+        <!-- </div> -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="slct_admn">
+                    <p>Select Admin Type*</p>
+                    <div class="clr"></div>
+                    <label style="" *ngFor="let policy of permission">
+                        <input formControlName="permission" type="radio" [value]="policy.value" [(ngModel)]="adminData.permission" />
+                        <p>{{policy.label}}</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button [disabled]="adminform.invalid" type="button" class="btn btn-primary save_btn" (click)="addAdmin()"><img
+                    src="../../../assets/slotsAssets/img/save_icon.png" /></button>
+
+            <button type="button" class="btn btn-default cncel_btn" (click)="addAdminCancel()"><img src="../../../assets/slotsAssets/img/cancel_icon.png" /></button>
+
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog [minWidth]="300" [draggable]="false" header="Edit Admin" id="edit-admin" [visible]="editAdminDialog"
+    [closable]="false" [resizable]="false" class="add_admin_modal">
+    <form [formGroup]="adminform" class="form-signin">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="adminData.firstName"
+                        placeholder="First Name" required="" autofocus="" />
+                    <!--<span *ngIf=" adminform.controls['firstName'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input tabindex="-1" type="text" class="form-control" formControlName="lastName" [(ngModel)]="adminData.lastName"
+                        placeholder="Last Name" required="" />
+                    <!--<span *ngIf=" adminform.controls['lastName'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" formControlName="username" disabled [(ngModel)]="adminData.username"
+                        placeholder="Username" required="" autofocus="" />
+                    <!--<span *ngIf=" adminform.controls['userame'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group has-feedback">
+                    <span _ngcontent-c7="" class="input-group-addon" id="phone_num">&nbsp;+1&nbsp;</span>
+                    <!--<span class="input-group-addon" id="phone_num">&nbsp;</span>-->
+                    <input pInputText type="text" class="form-control" formControlName="phoneNumber" disabled
+                        [(ngModel)]="adminData.phoneNumber" placeholder="999-999-9999" required="" autofocus=""
+                        aria-describedby="phone_num" />
+                    <!--<input class="form-control" pInputText type="number" [(ngModel)]="adminData.phoneNumber"  formControlName="phoneNumber" placeholder="999-999-9999"/>-->
+
+                    <!--<span *ngIf=" adminform.controls['userame'].invalid"> First name is required </span>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" formControlName="email" disabled [(ngModel)]="adminData.email"
+                        placeholder="Email" required="" autofocus="" />
+                </div>
+            </div>
+            <!--             <div class="ui-grid-col-6">
+                <span class="form-control">@flower-mound.com</span>
+                <span *ngIf=" adminform.controls['email'].invalid"> First name is required </span>
+            </div> -->
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="slct_admn">
+                    <p>Select Admin Type*</p>
+                    <div class="clr"></div>
+                    <label *ngFor="let policy of permission">
+                        <input formControlName="permission" type="radio" [value]="policy.value" [(ngModel)]="adminData.permission" />
+                        <p>{{policy.label}}</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button [disabled]="adminform.invalid" type="button" class="btn btn-primary save_btn" (click)="editAdmin()"><img
+                    src="../../../assets/slotsAssets/img/save_icon.png" /></button>
+
+            <button type="button" class="btn btn-default cncel_btn" (click)="editAdminCancel()"><img src="../../../assets/slotsAssets/img/cancel_icon.png" /></button>
+        </div>
+
+    </form>
+</p-dialog>
+
+<p-dialog [resizable]="false" [draggable]="false" [closable]="false" [modal]="true" [visible]="loadingBar">
+    <div id="loadingModal" style="overflow-y:visible; ">
+        <h3 style="text-align: center;">Loading...</h3>
+        <br>
+        <div class="progress progress-striped active" style="margin-bottom:0;
+               width: 100%;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+</p-dialog>
+<p-growl [life]="6000" [(value)]="msgs"></p-growl>
