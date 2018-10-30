@@ -24,7 +24,7 @@ phases:
         # set npm registry to http
         - npm config set registry="http://registry.npmjs.org/"
         # Install Angular CLI, If you are not using Angular 6, install angular/cli@1.7.0 or lower, confirm by running ng -v inside your project folder
-        - npm install @angular/cli -y
+        - npm install @angular/cli5.2.4 -y
         # Install node dependancies.
         - ng --version
         - npm install
