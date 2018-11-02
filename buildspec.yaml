@@ -14,7 +14,7 @@ phases:
         # Verify Node npm installation 
         - npm --version
         - nodejs --version
-        # set npm registry to http
+        # set npm registry to http 
         # npm config set registry="http://registry.npmjs.org/"
         #- npm config set strict-ssl false
         # Install Angular CLI, If you are not using Angular 6, install angular/cli@1.7.0 or lower, confirm by running ng -v inside your project folder
