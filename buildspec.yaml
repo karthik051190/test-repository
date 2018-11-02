@@ -23,7 +23,7 @@ phases:
         # Install node dependancies.
         #- ng help
         #- ng version 
-        - npm install
+        - npm install 
 
     build:
         commands:
