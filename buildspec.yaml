@@ -21,7 +21,7 @@ phases:
         - npm i npm@latest -g
         - npm install angular-cli -g
         # Install node dependancies.
-        - ng --version
+        - ng -version
         - npm install
 
     build:
