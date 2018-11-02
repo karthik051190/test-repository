@@ -11,21 +11,14 @@ phases:
         commands:
         # Download and Install NodeJS 8.0     
         - sudo apt-get update -y
-        - sudo apt-get install -y nodejs
-        - echo Installing source NPM dependencies...
-        # Install http drivers for node
-        - sudo apt-get update -y
-        # Install Node Package Manager (Replace the commands below if you using NPM).
-        - sudo apt-get install npm -y
-        - sudo apt-get update -y
         # Verify Node npm installation 
         - npm --version
         - nodejs --version
         # set npm registry to http
         # npm config set registry="http://registry.npmjs.org/"
-        - npm config set strict-ssl false
+        #- npm config set strict-ssl false
         # Install Angular CLI, If you are not using Angular 6, install angular/cli@1.7.0 or lower, confirm by running ng -v inside your project folder
-        - npm install angular-cli
+        #- npm install angular-cli
         # Install node dependancies.
         - ng --version
         - npm install
