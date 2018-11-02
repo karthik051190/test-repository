@@ -19,7 +19,7 @@ phases:
         #- npm config set strict-ssl false
         # Install Angular CLI, If you are not using Angular 6, install angular/cli@1.7.0 or lower, confirm by running ng -v inside your project folder
         - npm i npm@latest -g
-        - npm install angular-cli -g
+        - npm install -g @angular/cli
         # Install node dependancies.
         #- ng help
         - ng version 
