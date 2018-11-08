@@ -2,7 +2,7 @@ version: 0.2
 
 env:
     variables:
-        S3_BUCKET: "front-end-2018-karthik"
+        S3_BUCKET: "test-cicd-karthik-bkt"
         #APP_NAME: "<APP_NAME_HERE>"
         BUILD_ENV : "prod"
 
